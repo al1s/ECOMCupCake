@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ECOMCupCake.Models;
+using Microsoft.EntityFrameworkCore;
 namespace ECOMCupCake.Data
 {
     public class StoreDBContext : DbContext
@@ -7,5 +8,6 @@ namespace ECOMCupCake.Data
             : base(options)
         {
         }
+        public DbSet<Inventory> Inventories { get; set; }
     }
 }
