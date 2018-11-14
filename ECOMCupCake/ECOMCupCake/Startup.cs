@@ -33,7 +33,7 @@ namespace ECOMCupCake
             services.AddMvc();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<StoreDBContext>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
             services.AddDbContext<StoreDBContext>(options =>
