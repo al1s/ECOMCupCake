@@ -24,9 +24,8 @@ namespace ECOMCupCake.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(Inventory inventory)
         {
-            Inventory inventory = await _context.Inventories.FindAsync(id);
             _context.Remove(inventory);
             await _context.SaveChangesAsync();
         }
@@ -36,7 +35,7 @@ namespace ECOMCupCake.Models.Services
             return await _context.Inventories.Select(elm => elm).ToListAsync();
         }
 
-        public async Task<Inventory> GetById(int id)
+        public async Task<Inventory> GetById(int? id)
         {
             return await _context.Inventories.FindAsync(id);
         }
@@ -45,6 +44,10 @@ namespace ECOMCupCake.Models.Services
         {
             _context.Inventories.Update(inventory);
             await _context.SaveChangesAsync();
+        }
+        public bool EntityExists(int id)
+        {
+            return GetById(id) != null;
         }
     }
 }
