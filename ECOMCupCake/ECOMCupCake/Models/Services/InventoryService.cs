@@ -11,9 +11,9 @@ namespace ECOMCupCake.Models.Services
 {
     public class InventoryService : IInventory
     {
-        private StoreDBContext _context { get; set; }
+        private StoreDbContext _context { get; set; }
 
-        public void IInventory(StoreDBContext Context)
+        public void IInventory(StoreDbContext Context)
         {
             _context = Context;
         }
