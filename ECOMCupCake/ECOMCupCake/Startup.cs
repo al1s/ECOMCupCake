@@ -32,15 +32,20 @@ namespace ECOMCupCake
 
             services.AddMvc();
 
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<StoreDBContext>()
+            .AddDefaultTokenProviders();
+
             services.AddDbContext<StoreDBContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("ProdDB"));
             });
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("IdentityDB")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<StoreDBContext>()
-            .AddDefaultTokenProviders();
+
+ 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
