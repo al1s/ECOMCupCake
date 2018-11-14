@@ -8,18 +8,32 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ECOMCupCake.Migrations
 {
-    [DbContext(typeof(StoreDBContext))]
-    [Migration("20181114071946_Initial")]
-    partial class Initial
+    [DbContext(typeof(StoreDbContext))]
+    [Migration("20181114163407_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ChangeDetector.SkipDetectChanges", "true")
-                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ECOMCupCake.Models.Inventory", b =>
+                {
+                    b.Property<int>("InventoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Desctiption");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("InventoryId");
+
+                    b.ToTable("Inventories");
+                });
 #pragma warning restore 612, 618
         }
     }
