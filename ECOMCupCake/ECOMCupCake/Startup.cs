@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using ECOMCupCake.Data;
 using ECOMCupCake.Models;
+using ECOMCupCake.Models.Interfaces;
+using ECOMCupCake.Models.Services;
 
 namespace ECOMCupCake
 {
@@ -40,6 +42,7 @@ namespace ECOMCupCake
             {
                 options.UseSqlServer(Configuration.GetConnectionString("ProdDB"));
             });
+            services.AddTransient<IInventory, InventoryService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("IdentityDB")));
