@@ -69,7 +69,7 @@ namespace ECOMCupCake.Controllers
                 if (result.Succeeded)
                 {
                     // Custom Claim type for full name
-                    Claim fullNameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
+                    Claim fullNameClaim = new Claim("Name", $"{user.FirstName} {user.LastName}");
 
                     // claim type for State
                     Claim stateClaim = new Claim(ClaimTypes.StateOrProvince,user.State, ClaimValueTypes.String);
