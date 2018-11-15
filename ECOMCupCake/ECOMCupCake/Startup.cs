@@ -35,7 +35,7 @@ namespace ECOMCupCake
                 .AddDefaultTokenProviders();
 
             services.AddDbContext<StoreDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("TestDB")));
+                options.UseSqlServer(Configuration.GetConnectionString("ProdDB")));
             services.AddTransient<IInventory, InventoryService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
