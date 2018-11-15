@@ -1,3 +1,7 @@
+@using Microsoft.AspNetCore.Identity
+@using ECOMCupCake.Models
+@inject SignInManager<ApplicationUser> SignInManager
+
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     @Html.ActionLink("Main page", "Index", new { controller = "Home" }, new { @class = "navbar-brand" })
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,8 +17,16 @@
             </li>
         </ul>
         <div class="navbar-nav ml-auto">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <span>Hello, @User.Claims.First(name => name.Type == "Name").Value;!</span>&nbsp;or&nbsp;
+            @Html.ActionLink("Logout", "Logout", "Account")
+        }
+        else
+        {
             @Html.ActionLink("Sign in", "Login", "Account")&nbsp;or&nbsp;
             @Html.ActionLink("Sign up", "Register", "Account")
+        }
          </div>
     </div>
 </nav>

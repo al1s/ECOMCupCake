@@ -1,0 +1,18 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ECOMCupCake.Models
+@inject SignInManager<ApplicationUser> SignInManager
+
+<div class="jumbotron">
+    <div class="container">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <h1 class="display-3">Hello, @User.Claims.First(name => name.Type == "FullName").Value;!</h1>
+        }
+        else
+        {
+            <p>Hello!</p>
+        }
+
+        <p>This is a Cupcake store</p>
+    </div>
+</div>
