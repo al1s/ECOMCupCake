@@ -1,8 +1,5 @@
-﻿
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
-<p>Hello World!</p>
+@await Html.PartialAsync("_album", Model)
