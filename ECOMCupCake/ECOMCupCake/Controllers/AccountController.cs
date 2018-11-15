@@ -34,7 +34,7 @@ namespace ECOMCupCake.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
-            return View();
+            return View(new RegisterViewModel());
         }
 
         /// <summary>
@@ -59,6 +59,8 @@ namespace ECOMCupCake.Controllers
                     Email = rvm.Email,
                     FirstName = rvm.FirstName,
                     LastName = rvm.LastName,
+                    State = rvm.State,
+                    ZipCode = rvm.ZipCode
                 };
 
                 var result = await _userManager.CreateAsync(user, rvm.Password);
