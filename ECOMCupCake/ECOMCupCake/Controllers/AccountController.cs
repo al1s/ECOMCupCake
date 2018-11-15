@@ -81,16 +81,52 @@ namespace ECOMCupCake.Controllers
         /// Logins this instance.
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
+
             return View();
         }
 
+        /// <summary>
+        /// Logins the specified LVM.
+        /// </summary>
+        /// <param name="lvm">The LVM.</param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel lvm)
+        public async Task<IActionResult> Login(LoginViewModel lvm, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, false, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToLocal(returnUrl);
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View(lvm);
+
+            }
+
             return View(lvm);
+        }
+
+        /// <summary>
+        /// Logouts this instance.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
 
         #region Helpers        
