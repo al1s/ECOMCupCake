@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ECOMCupCake.Models;
 using ECOMCupCake.Models.ViewModels;
@@ -67,6 +68,26 @@ namespace ECOMCupCake.Controllers
 
                 if (result.Succeeded)
                 {
+                    // Custom Claim type for full name
+                    Claim fullNameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
+
+                    // claim type for State
+                    Claim stateClaim = new Claim(ClaimTypes.StateOrProvince,user.State, ClaimValueTypes.String);
+
+                    // claim type for email
+                    Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+
+                    List<Claim> myclaims = new List<Claim>()
+                    {
+                        fullNameClaim,
+                        stateClaim,
+                        emailClaim
+                    }; ;
+
+
+
+                    await _userManager.AddClaimsAsync(user, myclaims);
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToLocal(returnUrl);
                 }
