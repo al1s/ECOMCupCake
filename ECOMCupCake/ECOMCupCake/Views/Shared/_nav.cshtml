@@ -19,13 +19,14 @@
         <div class="navbar-nav ml-auto">
         @if (SignInManager.IsSignedIn(User))
         {
-            <span>Hello, @User.Claims.First(name => name.Type == "Name").Value;!</span>&nbsp;or&nbsp;
+            <span>Hello, @User.Claims.First(name => name.Type == "Name").Value;! or </span>
             @Html.ActionLink("Logout", "Logout", "Account")
         }
         else
         {
-            @Html.ActionLink("Sign in", "Login", "Account")&nbsp;or&nbsp;
-            @Html.ActionLink("Sign up", "Register", "Account")
+            <pre>
+                @Html.ActionLink("Sign in", "Login", "Account"); or @Html.ActionLink("Sign up", "Register", "Account");
+            </pre>
         }
          </div>
     </div>
