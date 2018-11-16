@@ -43,9 +43,14 @@ namespace ECOMCupCake.Models.Services
                             .ToListAsync();
         }
 
-        public Task<ICollection<Inventory>> GetRandom(int recordsToReturn)
+        public async Task<ICollection<Inventory>> GetRandom(int recordsToReturn)
         {
-            throw new NotImplementedException();
+            Random rnd = new Random();
+            return await _context.Inventories
+                             .Where(inv => inv.Quantity > 0)
+                             .OrderBy(inv => rnd.Next())
+                             .Take(recordsToReturn)
+                             .ToListAsync() ;
         }
 
         public async Task<Inventory> GetById(int? id)
