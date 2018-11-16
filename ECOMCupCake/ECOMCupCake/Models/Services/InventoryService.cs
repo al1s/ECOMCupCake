@@ -1,6 +1,5 @@
 ﻿using ECOMCupCake.Data;
 using ECOMCupCake.Models.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -32,7 +31,21 @@ namespace ECOMCupCake.Models.Services
 
         public async Task<ICollection<Inventory>> GetAll()
         {
-            return await _context.Inventories.Select(elm => elm).ToListAsync();
+            return await _context.Inventories.Where(inv => inv.Quantity > 0).ToListAsync();
+        }
+
+        public async Task<ICollection<Inventory>> GetAll(int startFrom, int recordsToReturn)
+        {
+            return await _context.Inventories
+                            .Where(inv => inv.Quantity > 0)
+                            .Skip(startFrom)
+                            .Take(recordsToReturn)
+                            .ToListAsync();
+        }
+
+        public Task<ICollection<Inventory>> GetRandom(int recordsToReturn)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Inventory> GetById(int? id)
@@ -45,9 +58,12 @@ namespace ECOMCupCake.Models.Services
             _context.Inventories.Update(inventory);
             await _context.SaveChangesAsync();
         }
+
         public bool EntityExists(int id)
         {
             return GetById(id) != null;
         }
+
     }
+
 }
