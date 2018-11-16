@@ -11,6 +11,8 @@ namespace ECOMCupCake.Models.Interfaces
     {
         Task Create(Inventory inventory);
         Task<ICollection<Inventory>> GetAll();
+        Task<ICollection<Inventory>> GetAll(int startFrom, int recordsToReturn);
+        Task<ICollection<Inventory>> GetRandom(int recordsToReturn);
         Task<Inventory> GetById(int? id);
         Task Update(Inventory inventory);
         Task Delete(Inventory inventory);
