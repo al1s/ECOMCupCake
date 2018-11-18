@@ -15,7 +15,7 @@ namespace ECOMCupCake.Controllers
     public class InventoryController : Controller
     {
         private IInventory _inventory { get; set; }
-        public InventoryController(InventoryService inventory)
+        public InventoryController(IInventory inventory)
         {
             _inventory = inventory;
         }
