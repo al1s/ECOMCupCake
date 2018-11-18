@@ -1,0 +1,62 @@
+﻿@model PaginatedList<ECOMCupCake.Models.Product>
+
+@{
+    ViewData["Title"] = "Shop";
+}
+
+
+<div class="shop-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Shop</h1>
+    <p class="lead">Browse our selection of beautiful and tasty Cupcakes.</p>
+</div>
+
+<div class="card-columns">
+
+    @foreach (var item in Model.Items)
+    {
+
+
+
+    <div class="card product-card">
+        <img class="card-img-top" src="~/images/cupcake.jpg" alt="Cupcake Image">
+        <div class="slide-actions">
+            <ul class="card-product-actions">
+                <li><a href="" data-tip="View"><i class="fa fa-search"></i></a></li>
+                <li><a href="" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@item.Name</h5>
+            <p class="card-text">@item.Description</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <a class="btn btn-primary btn-product active"><i class="fa fa-info"></i> View</a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="btn btn-success btn-product active"><i class="fa fa-cart-plus"></i> Buy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    }
+</div>
+
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-controller="Home" asp-action="Index"
+   asp-route-pageIndex="@(Model.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-controller="Home" asp-action="Index"
+   asp-route-pageIndex="@(Model.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
