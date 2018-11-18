@@ -11,12 +11,8 @@
 </div>
 
 <div class="card-columns">
-
     @foreach (var item in Model.Items)
     {
-
-
-
     <div class="card product-card">
         <img class="card-img-top" src="~/images/cupcake.jpg" alt="Cupcake Image">
         <div class="slide-actions">
@@ -38,18 +34,12 @@
             </div>
         </div>
     </div>
-
-
-
     }
 </div>
-
-
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
-
 <a asp-controller="Home" asp-action="Index"
    asp-route-pageIndex="@(Model.PageIndex - 1)"
    class="btn btn-default @prevDisabled">

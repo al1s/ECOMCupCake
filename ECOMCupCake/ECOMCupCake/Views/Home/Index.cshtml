@@ -1,5 +1,38 @@
-﻿@{
-    ViewData["Title"] = "Index";
+﻿@model IEnumerable<ECOMCupCake.Models.Product>
+
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-@*@await Html.PartialAsync("_album")*@
+
+@section Carousel {
+<div class="carousel-item">
+    <img class="d-block w-100" style="background-image: url('/images/cupcake_car_3.jpg')">
+</div>
+    <div class="carousel-item">
+        <img class="d-block w-100" style="background-image: url('/images/cupcake_car_1.jpg')">
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $('.carousel').carousel({
+            interval: 20000
+        })
+    </script>
+}
+<h1 class="display-4 text-center">Staff Picks</h1>
+<p class="lead text-center">Hand crafted, premium baked Cupcakes.</p>
+<div class="row">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4 text-center">
+            <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Cupcake image" width="140" height="140">
+            <h2>@item.Name</h2>
+            <p>@item.Description</p>
+            <p><a class="" href="#" role="button">View details</a></p>
+        </div>
+    }
+</div>
