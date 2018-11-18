@@ -59,42 +59,42 @@ namespace ECOMCupCake.Controllers
         }
         // POST: /Inventory/Edit/3
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, Inventory inventory)
+        public async Task<IActionResult> Edit(int id, Product product)
         {
-            if (id != inventory.InventoryId)
+            if (id != product.ID)
                 NotFound();
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _inventory.Update(inventory);
+                    await _inventory.Update(product);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_inventory.EntityExists(inventory.InventoryId))
+                    if (!_inventory.EntityExists(product.ID))
                         NotFound();
                     else
                         throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(inventory);
+            return View(product);
         }
         // GET: /Inventory/Create
         public IActionResult Create()
         {
-            return View(new Inventory());
+            return View(new Product());
         }
         // POST: /Inventory/Create
         [HttpPost]
-        public async Task<IActionResult> Create(Inventory inventory)
+        public async Task<IActionResult> Create(Product product)
         {
             if (ModelState.IsValid)
             {
-                await _inventory.Create(inventory);
-                RedirectToAction(nameof(Details), new { id = inventory.InventoryId});
+                await _inventory.Create(product);
+                RedirectToAction(nameof(Details), new { id = product.ID});
             }
-            return View(inventory);
+            return View(product);
         }
     }
 }

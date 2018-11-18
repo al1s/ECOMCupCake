@@ -9,13 +9,12 @@ namespace ECOMCupCake.Models.Interfaces
 {
     public interface IInventory
     {
-        Task Create(Inventory inventory);
-        Task<ICollection<Inventory>> GetAll();
-        Task<ICollection<Inventory>> GetAll(int startFrom, int recordsToReturn);
-        Task<ICollection<Inventory>> GetRandom(int recordsToReturn);
-        Task<Inventory> GetById(int? id);
-        Task Update(Inventory inventory);
-        Task Delete(Inventory inventory);
+        Task Create(Product product);
+        Task<ICollection<Product>> GetAll(int startFrom = 0, int recordsToReturn = 50, bool onlyPublished = true);
+        Task<ICollection<Product>> GetRandom(int recordsToReturn);
+        Task<Product> GetById(int? id);
+        Task Update(Product product);
+        Task Delete(Product product);
         bool EntityExists(int id);
     }
 }
