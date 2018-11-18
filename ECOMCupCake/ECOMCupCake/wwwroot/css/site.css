@@ -1,7 +1,7 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
 body {
-    padding-top: 50px;
+    padding-top: 120px;
     padding-bottom: 60px;
 }
 
@@ -55,4 +55,93 @@ html {
     #nav-search-btn {
         width: 100%;
     }
+}
+
+
+.btn-product {
+    width: 100%;
+}
+
+.slide-actions .card-product-actions {
+    width: 150px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    transform: translateY(-50%) translateX(-50%);
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    z-index: 1;
+    text-align: center;
+    transition: all .3s ease 0s
+}
+
+
+.product-card .card-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+    .product-card .card-text:hover {
+        overflow: visible;
+        white-space: inherit;
+    }
+
+.product-card:hover .slide-actions .card-product-actions {
+    opacity: 1
+}
+
+.slide-actions .card-product-actions li {
+    display: inline-block
+}
+
+.slide-actions .card-product-actions li a {
+    color: #fff;
+    background-color: #333;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    margin: 0 2px;
+    display: block;
+    position: relative;
+    transition: all .3s ease-in-out
+}
+
+.slide-actions .card-product-actions li a:hover {
+    color: #fff;
+    background-color: #ef5777
+}
+
+.slide-actions .card-product-actions li a:after, .slide-actions .card-product-actions li a:before {
+    content: attr(data-tip);
+    color: #fff;
+    background-color: #000;
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 20px;
+    padding: 1px 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-50%);
+    position: absolute;
+    left: 50%;
+    top: -30px
+}
+
+.slide-actions .card-product-actions li a:after {
+    content: '';
+    height: 15px;
+    width: 15px;
+    border-radius: 0;
+    transform: translateX(-50%) rotate(45deg);
+    top: -20px;
+    z-index: -1
+}
+
+.slide-actions .card-product-actions li a:hover:after, .slide-actions .card-product-actions li a:hover:before {
+    opacity: 1
 }
