@@ -17,50 +17,50 @@ namespace ECOMCupCake.Models.Services
             _context = Context;
         }
 
-        public async Task Create(Inventory inventory)
+        public async Task Create(Product product)
         {
-            _context.Add(inventory);
+            _context.Add(product);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(Inventory inventory)
+        public async Task Delete(Product product)
         {
-            _context.Remove(inventory);
+            _context.Remove(product);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Inventory>> GetAll()
+        public async Task<ICollection<Product>> GetAll()
         {
-            return await _context.Inventories.Where(inv => inv.Quantity > 0).ToListAsync();
+            return await _context.Products.Where(inv => inv.Quantity > 0).ToListAsync();
         }
 
-        public async Task<ICollection<Inventory>> GetAll(int startFrom, int recordsToReturn)
+        public async Task<ICollection<Product>> GetAll(int startFrom, int recordsToReturn)
         {
-            return await _context.Inventories
+            return await _context.Products
                             .Where(inv => inv.Quantity > 0)
                             .Skip(startFrom)
                             .Take(recordsToReturn)
                             .ToListAsync();
         }
 
-        public async Task<ICollection<Inventory>> GetRandom(int recordsToReturn)
+        public async Task<ICollection<Product>> GetRandom(int recordsToReturn)
         {
             Random rnd = new Random();
-            return await _context.Inventories
+            return await _context.Products
                              .Where(inv => inv.Quantity > 0)
                              .OrderBy(inv => rnd.Next())
                              .Take(recordsToReturn)
                              .ToListAsync() ;
         }
 
-        public async Task<Inventory> GetById(int? id)
+        public async Task<Product> GetById(int? id)
         {
-            return await _context.Inventories.FindAsync(id);
+            return await _context.Products.FindAsync(id);
         }
 
-        public async Task Update(Inventory inventory)
+        public async Task Update(Product product)
         {
-            _context.Inventories.Update(inventory);
+            _context.Products.Update(product);
             await _context.SaveChangesAsync();
         }
 

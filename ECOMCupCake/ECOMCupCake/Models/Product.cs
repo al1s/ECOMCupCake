@@ -16,5 +16,8 @@ namespace ECOMCupCake.Models
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public bool Published { get; set; }
+        public int Quantity { get; set; }
+
     }
 }
