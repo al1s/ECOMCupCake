@@ -1,33 +1,50 @@
 @using Microsoft.AspNetCore.Identity
 @using ECOMCupCake.Models
 @inject SignInManager<ApplicationUser> SignInManager
+    <header>
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    @Html.ActionLink("Main page", "Index", new { controller = "Home" }, new { @class = "navbar-brand" })
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbars">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="https://getbootstrap.com/docs/4.1/examples/jumbotron/#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="https://getbootstrap.com/docs/4.1/examples/jumbotron/#">Disabled</a>
-            </li>
-        </ul>
-        <div class="navbar-nav ml-auto">
-        @if (SignInManager.IsSignedIn(User))
-        {
-            <span>Hello, @User.Claims.First(name => name.Type == "Name").Value;! or </span>
-            @Html.ActionLink("Logout", "Logout", "Account")
-        }
-        else
-        {
-            <pre>
-                @Html.ActionLink("Sign in", "Login", "Account"); or @Html.ActionLink("Sign up", "Register", "Account");
-            </pre>
-        }
-         </div>
-    </div>
-</nav>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            @Html.ActionLink("Cupcake Store", "Index", new { controller = "Home" }, new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Shop" asp-action="Index" class="nav-link">Shop</a></li>
+                </ul>
+                
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+
+                <form action="@Html.ActionLink("Logout", "Logout", "Account")" method="post" id="logoutForm" class="navbar-right">
+                    <ul class="navbar-nav navbar-right">
+                        <li class="nav-item">
+                            >
+                            <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="nav-link">Hello @User.Claims.First(name => name.Type == "Name").Value!</a>
+                        </li>>
+                        <li class="nav-item">
+                            >
+                            <button type="submit" class="btn btn-link navbar-btn navbar-link nav-link">Logout</button>
+                        </li>
+                    </ul>
+                </form>
+                }
+                else
+                {
+                    <ul class="navbar-nav navbar-right">
+
+                        <li class="nav-item">@Html.ActionLink("Sign up", "Register", "Account", new object { }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Sign in", "Login", "Account", new object { }, new { @class = "nav-link" })</li>
+                    </ul>
+
+                }
+
+                <form class="form-inline mt-2 mt-md-0 navbar-right">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button id="nav-search-btn"class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
