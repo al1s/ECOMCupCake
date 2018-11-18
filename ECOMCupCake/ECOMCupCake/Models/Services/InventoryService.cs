@@ -12,7 +12,7 @@ namespace ECOMCupCake.Models.Services
     {
         private StoreDbContext _context { get; set; }
 
-        public void IInventory(StoreDbContext Context)
+        public InventoryService(StoreDbContext Context)
         {
             _context = Context;
         }
