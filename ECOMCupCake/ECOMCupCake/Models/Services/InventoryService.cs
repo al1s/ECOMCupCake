@@ -29,25 +29,34 @@ namespace ECOMCupCake.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Product>> GetAll()
-        {
-            return await _context.Products.Where(inv => inv.Quantity > 0).ToListAsync();
-        }
 
-        public async Task<ICollection<Product>> GetAll(int startFrom, int recordsToReturn)
+        public async Task<ICollection<Product>> GetAll(int startFrom = 0, int recordsToReturn = 50, bool onlyPublished = true)
         {
-            return await _context.Products
-                            .Where(inv => inv.Quantity > 0)
-                            .Skip(startFrom)
-                            .Take(recordsToReturn)
-                            .ToListAsync();
+
+            if (onlyPublished)
+            {
+                return await _context.Products
+                .Where(inv => inv.Quantity > 0 && inv.Published == true)
+                .Skip(startFrom)
+                .Take(recordsToReturn)
+                .ToListAsync();
+            }
+            else
+            {
+                return await _context.Products
+                .Where(inv => inv.Quantity > 0)
+                .Skip(startFrom)
+                .Take(recordsToReturn)
+                .ToListAsync();
+            }
+
         }
 
         public async Task<ICollection<Product>> GetRandom(int recordsToReturn)
         {
             Random rnd = new Random();
             return await _context.Products
-                             .Where(inv => inv.Quantity > 0)
+                             .Where(inv => inv.Quantity > 0 && inv.Published == true)
                              .OrderBy(inv => rnd.Next())
                              .Take(recordsToReturn)
                              .ToListAsync() ;

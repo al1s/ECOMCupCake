@@ -3,14 +3,16 @@ using ECOMCupCake.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ECOMCupCake.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class StoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181118040956_Merged Product and Inventory")]
+    partial class MergedProductandInventory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,7 @@ namespace ECOMCupCake.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnName("Price")
-                        .HasColumnType("DECIMAL(18,4)");
+                        .HasColumnType("DECIMAL(18,4");
 
                     b.Property<bool>("Published");
 
