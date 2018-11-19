@@ -9,6 +9,7 @@ namespace ECOMCupCake.Models.ViewModels
     {
         public int PageIndex { get; private set; }
         public int TotalPages { get; private set; }
+
         public ICollection<T> Items { get; private set;  }
 
         public PaginatedList(ICollection<T> items, int count, int pageIndex, int pageSize)

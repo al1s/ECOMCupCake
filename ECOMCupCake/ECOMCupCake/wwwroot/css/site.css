@@ -86,41 +86,26 @@ html {
     position: absolute;
     right: 15%;
     left: 15%;
-    padding-top: 20px;
-    padding-bottom: 20px;
     color: #fff;
     text-align: center;
-    bottom: 40%;
     z-index: 20;
+    top: 50%;
+    transform: translate(0%, -50%);
 }
-
-.carousel-text h1 {
-    font-size: 3rem;
-    color: #fff;
-    text-align: center;
-    text-shadow: 0 1px 2px rgba(0,0,0,.6);
-}
-
-@media (max-width: 768px) {
-    .carousel-item {
-        height: 350px;
-    }
-
-
-    .carousel-text {
-        position: absolute;
-        right: 0%;
-        left: 0%;
-        color: #fff;
-        bottom: 20%;
-        width: 100%;
-    }
 
     .carousel-text h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        color: #fff;
+        text-align: center;
+        text-shadow: 0 1px 2px rgba(0,0,0,.6);
+
     }
 
-
+.homepage-featured-cupcakes .preview {
+    width: 140px;
+    height: 140px;
+    background-position: center;
+    background-size: cover;
 }
 
 
@@ -145,17 +130,15 @@ html {
     transition: all .3s ease 0s
 }
 
-
-.product-card .card-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
 }
 
-    .product-card .card-text:hover {
-        overflow: visible;
-        white-space: inherit;
-    }
+.product-card {
+}
+
 
 .product-card:hover .slide-actions .card-product-actions {
     opacity: 1
@@ -212,4 +195,67 @@ html {
 
 .slide-actions .card-product-actions li a:hover:after, .slide-actions .card-product-actions li a:hover:before {
     opacity: 1
+}
+
+
+/* Responsive Queries at Bottom */ 
+
+@media (max-width: 768px) {
+    .carousel-item {
+        height: 300px;
+    }
+
+
+    .carousel-text {
+        position: absolute;
+        right: 0%;
+        left: 0%;
+        color: #fff;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .carousel-text h1 {
+        font-size: 2.3rem;
+    }
+}
+
+@media (min-width: 769px)  {
+
+    .carousel-text {
+        position: absolute;
+        right: 0%;
+        left: 0%;
+        color: #fff;
+        width: 100%;
+    }
+
+    .carousel-text h1 {
+        font-size: 3rem;
+    }
+}
+
+
+@media (min-width: 576px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 768px) {
+    .card-columns {
+        column-count: 3;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-columns {
+        column-count: 4;
+    }
+}
+
+@media (min-width: 1200px) {
+    .card-columns {
+        column-count: 4;
+    }
 }

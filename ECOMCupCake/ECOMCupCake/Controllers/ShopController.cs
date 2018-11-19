@@ -22,8 +22,8 @@ namespace ECOMCupCake.Controllers
 
         public async Task<IActionResult> Index(int page = 1)
         {
-            var inventories = await _inventory.GetAll((page - 1)* 20, 20);
-            return View(new PaginatedList<Product>(inventories, inventories.Count, page, 20));
+            var inventories = await _inventory.GetAll((page - 1) * 8, 8);
+            return View(inventories);
         }
     }
 }

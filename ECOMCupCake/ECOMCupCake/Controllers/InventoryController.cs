@@ -21,12 +21,14 @@ namespace ECOMCupCake.Controllers
             _inventory = inventory;
         }
         // GET: /Inventory/Index
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Index()
         {
             var inventories = await _inventory.GetAll();
-            return View(inventories);
+            return View(inventories.Items);
         }
         // GET: /Inventory/Details/3
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
