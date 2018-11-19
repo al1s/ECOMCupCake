@@ -15,7 +15,7 @@ namespace ECOMCupCake.Models.Handlers
             string userEmail = context.User.FindFirst(claim => claim.Type == ClaimTypes.Email).Value;
             if(userEmail.Contains("@codefellows.com") ||
                 userEmail.Contains("alstof@gmail.com") ||
-                userEmail.Contains("guicansado@hotmail.com"))
+                userEmail.Contains("guicansado@gmail.com"))
             {
                 context.Succeed(requirement);
             }
