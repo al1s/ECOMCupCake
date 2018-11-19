@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ECOMCupCake.Models;
 using ECOMCupCake.Models.Interfaces;
 using ECOMCupCake.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +38,7 @@ namespace ECOMCupCake.Controllers
         }
         // POST: /Inventory/Delete/3
         [HttpPost]
+        [Authorize(Policy="AdminOnly")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -48,6 +50,7 @@ namespace ECOMCupCake.Controllers
             return RedirectToAction(nameof(Index));
         }
         // GET: /Inventory/Edit/3
+        [Authorize(Policy="AdminOnly")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -59,6 +62,7 @@ namespace ECOMCupCake.Controllers
         }
         // POST: /Inventory/Edit/3
         [HttpPost]
+        [Authorize(Policy="AdminOnly")]
         public async Task<IActionResult> Edit(int id, Product product)
         {
             if (id != product.ID)
@@ -81,12 +85,14 @@ namespace ECOMCupCake.Controllers
             return View(product);
         }
         // GET: /Inventory/Create
+        [Authorize(Policy="AdminOnly")]
         public IActionResult Create()
         {
             return View(new Product());
         }
         // POST: /Inventory/Create
         [HttpPost]
+        [Authorize(Policy="AdminOnly")]
         public async Task<IActionResult> Create(Product product)
         {
             if (ModelState.IsValid)
