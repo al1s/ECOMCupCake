@@ -24,12 +24,12 @@
 }
 <h1 class="display-4 text-center">Staff Picks</h1>
 <p class="lead text-center">Hand crafted, premium baked Cupcakes.</p>
-<div class="row">
+<div class="row homepage-featured-cupcakes">
 
     @foreach (var item in Model)
     {
         <div class="col-lg-4 text-center">
-            <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Cupcake image" width="140" height="140">
+            <div class="rounded-circle preview mx-auto" style="background-image:url('@item.Image')" alt="Cupcake image"></div>
             <h2>@item.Name</h2>
             <p>@item.Description</p>
             <p><a class="" href="#" role="button">View details</a></p>
