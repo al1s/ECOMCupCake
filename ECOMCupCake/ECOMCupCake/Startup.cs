@@ -3,6 +3,7 @@ using ECOMCupCake.Models;
 using ECOMCupCake.Models.Handlers;
 using ECOMCupCake.Models.Interfaces;
 using ECOMCupCake.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -46,6 +47,8 @@ namespace ECOMCupCake
                 options.AddPolicy("AdminOnly", policy =>
                     policy.Requirements.Add(new RequireAdminRequirement()));
             });
+
+            services.AddScoped<IAuthorizationHandler, AdminEmailHandler>();
 
 
         }
