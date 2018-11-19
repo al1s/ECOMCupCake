@@ -1,5 +1,6 @@
 ﻿using ECOMCupCake.Data;
 using ECOMCupCake.Models.Interfaces;
+using ECOMCupCake.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,25 +31,22 @@ namespace ECOMCupCake.Models.Services
         }
 
 
-        public async Task<ICollection<Product>> GetAll(int startFrom = 0, int recordsToReturn = 50, bool onlyPublished = true)
+        public async Task<PaginatedList<Product>> GetAll(int startFrom = 0, int recordsToReturn = 50, bool onlyPublished = true)
         {
+            IQueryable<Product> query = _context.Products.Where(inv => inv.Quantity > 0);
+
 
             if (onlyPublished)
             {
-                return await _context.Products
-                .Where(inv => inv.Quantity > 0 && inv.Published == true)
-                .Skip(startFrom)
-                .Take(recordsToReturn)
-                .ToListAsync();
+                query = query.Where(inv => inv.Published == true);
             }
-            else
-            {
-                return await _context.Products
-                .Where(inv => inv.Quantity > 0)
-                .Skip(startFrom)
-                .Take(recordsToReturn)
-                .ToListAsync();
-            }
+
+            int rowCount = query.Count();
+            int page = (int)Math.Ceiling((1+startFrom) / (double)recordsToReturn);
+
+            return new PaginatedList<Product>(await query.Skip(startFrom)
+            .Take(recordsToReturn).ToListAsync(), rowCount, page, recordsToReturn);
+
 
         }
 
