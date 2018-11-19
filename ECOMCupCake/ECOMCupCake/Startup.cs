@@ -1,5 +1,6 @@
 ﻿using ECOMCupCake.Data;
 using ECOMCupCake.Models;
+using ECOMCupCake.Models.Handlers;
 using ECOMCupCake.Models.Interfaces;
 using ECOMCupCake.Models.Services;
 using Microsoft.AspNetCore.Builder;
@@ -40,7 +41,11 @@ namespace ECOMCupCake
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityDB")));
-
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy =>
+                    policy.Requirements.Add(new RequireAdminRequirement()));
+            });
 
 
         }
