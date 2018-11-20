@@ -28,3 +28,8 @@ The following claims are needed to create policies for Administrators, as well a
 
 ###Policies
 - We are enforcing the Admin policy to restrict access to inventory management pages to Administrators.
+- Pages accessible for admins only:
+  - https://ecomcupcake.azurewebsites.net/Inventory/index
+  - https://ecomcupcake.azurewebsites.net/Inventory/create
+  - https://ecomcupcake.azurewebsites.net/Inventory/edit
+  - https://ecomcupcake.azurewebsites.net/Inventory/delete
