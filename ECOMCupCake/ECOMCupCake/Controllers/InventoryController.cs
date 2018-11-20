@@ -21,6 +21,10 @@ namespace ECOMCupCake.Controllers
             _inventory = inventory;
         }
         // GET: /Inventory/Index
+        /// <summary>
+        /// Get all products from a repo
+        /// </summary>
+        /// <returns>UI View</returns>
         [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Index()
         {
@@ -28,6 +32,11 @@ namespace ECOMCupCake.Controllers
             return View(inventories.Items);
         }
         // GET: /Inventory/Details/3
+        /// <summary>
+        /// Get product details from a repo
+        /// </summary>
+        /// <param name="id">Id of the product to show</param>
+        /// <returns>UI View</returns>
         [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Details(int? id)
         {
@@ -39,6 +48,11 @@ namespace ECOMCupCake.Controllers
             return View(inventory);
         }
         // POST: /Inventory/Delete/3
+        /// <summary>
+        /// Delete the product from inventory
+        /// </summary>
+        /// <param name="id">Id of the product to delete</param>
+        /// <returns>UI View</returns>
         [HttpPost]
         [Authorize(Policy="AdminOnly")]
         public async Task<IActionResult> Delete(int? id)
@@ -52,6 +66,11 @@ namespace ECOMCupCake.Controllers
             return RedirectToAction(nameof(Index));
         }
         // GET: /Inventory/Edit/3
+        /// <summary>
+        /// Edit a product in a repo
+        /// </summary>
+        /// <param name="id">Id of the product to edit</param>
+        /// <returns>UI View</returns>
         [Authorize(Policy="AdminOnly")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -63,6 +82,12 @@ namespace ECOMCupCake.Controllers
             return View(inventory);
         }
         // POST: /Inventory/Edit/3
+        /// <summary>
+        /// Save the edited product in a repo
+        /// </summary>
+        /// <param name="id">Id of the product of an edition</param>
+        /// <param name="product">Resulting edited product</param>
+        /// <returns>UI View</returns>
         [HttpPost]
         [Authorize(Policy="AdminOnly")]
         public async Task<IActionResult> Edit(int id, Product product)
@@ -87,12 +112,21 @@ namespace ECOMCupCake.Controllers
             return View(product);
         }
         // GET: /Inventory/Create
+        /// <summary>
+        /// Create the product in a repo
+        /// </summary>
+        /// <returns>UI View</returns>
         [Authorize(Policy="AdminOnly")]
         public IActionResult Create()
         {
             return View(new Product());
         }
         // POST: /Inventory/Create
+        /// <summary>
+        /// Create the product in a repo
+        /// </summary>
+        /// <param name="product">Product to be created</param>
+        /// <returns>UI View</returns>
         [HttpPost]
         [Authorize(Policy="AdminOnly")]
         public async Task<IActionResult> Create(Product product)
