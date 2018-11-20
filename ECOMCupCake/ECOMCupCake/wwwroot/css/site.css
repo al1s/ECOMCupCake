@@ -108,7 +108,27 @@ html {
     background-size: cover;
 }
 
+.product-details .preview {
+    width: 200px;
+    height: 200px;
+    background-position: center;
+    background-size: cover;
+}
 
+
+
+.product-details .related-preview {
+    width: 80px;
+    height: 80px;
+    background-position: center;
+    background-size: cover;
+}
+
+.product-details .product-title {
+    min-height: 100%;
+    display: inline-flex;
+    align-items: center;
+}
 
 
 .btn-product {

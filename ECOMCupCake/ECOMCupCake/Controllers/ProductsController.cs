@@ -36,6 +36,7 @@ namespace ECOMCupCake.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
+        [Route("product/{slug}/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,6 +44,7 @@ namespace ECOMCupCake.Controllers
                 return NotFound();
             }
 
+            ViewData["related"] = await _inventory.GetRandom(3);
             var product = await _inventory.GetById(id);
 
             if (product == null)
