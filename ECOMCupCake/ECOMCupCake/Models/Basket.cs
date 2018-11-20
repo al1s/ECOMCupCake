@@ -8,7 +8,7 @@ namespace ECOMCupCake.Models
     public class Basket
     {
         public int ID { get; set; }
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public int ProductID { get; set; }
         public int Quantity { get; set; }
         public int? OrderID { get; set; }

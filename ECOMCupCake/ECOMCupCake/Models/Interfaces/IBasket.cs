@@ -1,15 +1,16 @@
 ﻿using ECOMCupCake.Models;
-using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ECOMCupCake.Controllers
+namespace ECOMCupCake.Interfaces
 {
     public interface IBasket
     {
-        Task AddProduct();
-        Task DeleteProduct(int ProductId);
-        Task<IActionResult> GetDetails(int ProductId);
-        Task<IActionResult> GetAll();
-        Task Update(Product product);
+        Task AddProductAsync(string UserId, int ProductId, int quantity);
+        Task DeleteProduct(string UserId, Basket productInBasket);
+        Task<Basket> GetProductInBasket(string UserId, int ProductId);
+        Task<IEnumerable<Basket>> GetAllInBasket(string UserId);
+        Task Update(string UserId, Basket product);
+        bool ProductExistsInBasket(string UserId, int ProductId);
     }
 }
