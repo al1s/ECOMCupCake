@@ -1,8 +1,38 @@
-﻿
+﻿@model IEnumerable<ECOMCupCake.Models.Product>
+
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Home";
 }
 
-<h2>Index</h2>
-<p>Hello World!</p>
+
+@section Carousel {
+<div class="carousel-item">
+    <img class="d-block w-100" style="background-image: url('/images/cupcake_car_3.jpg')">
+</div>
+    <div class="carousel-item">
+        <img class="d-block w-100" style="background-image: url('/images/cupcake_car_1.jpg')">
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $('.carousel').carousel({
+            interval: 20000
+        })
+    </script>
+}
+<h1 class="display-4 text-center">Staff Picks</h1>
+<p class="lead text-center">Hand crafted, premium baked Cupcakes.</p>
+<div class="row homepage-featured-cupcakes">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4 text-center">
+            <div class="rounded-circle preview mx-auto" style="background-image:url('@item.Image')" alt="Cupcake image"></div>
+            <h2>@item.Name</h2>
+            <p>@item.Description</p>
+            <p><a class="" href="#" role="button">View details</a></p>
+        </div>
+    }
+</div>

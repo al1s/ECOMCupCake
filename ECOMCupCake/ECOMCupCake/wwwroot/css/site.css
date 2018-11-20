@@ -1,0 +1,261 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-bottom: 60px;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+#mainCarousel {
+    padding-bottom: 20px;
+}
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+.carousel-item {
+    height: 500px;
+}
+
+.carousel-item img {
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0px;
+}
+
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f5f5f5;
+}
+
+.bg-dark {
+    background-color: #343a40 !important;
+}
+
+.navbar-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    margin-top: 20px;
+    margin-bottom: -90px;
+}
+
+@media (max-width: 768px) {
+    #nav-search-btn {
+        width: 100%;
+    }
+}
+
+
+.carousel-text {
+    position: absolute;
+    right: 15%;
+    left: 15%;
+    color: #fff;
+    text-align: center;
+    z-index: 20;
+    top: 50%;
+    transform: translate(0%, -50%);
+}
+
+    .carousel-text h1 {
+        font-size: 2rem;
+        color: #fff;
+        text-align: center;
+        text-shadow: 0 1px 2px rgba(0,0,0,.6);
+
+    }
+
+.homepage-featured-cupcakes .preview {
+    width: 140px;
+    height: 140px;
+    background-position: center;
+    background-size: cover;
+}
+
+
+
+
+.btn-product {
+    width: 100%;
+}
+
+.slide-actions .card-product-actions {
+    width: 150px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    transform: translateY(-50%) translateX(-50%);
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    z-index: 1;
+    text-align: center;
+    transition: all .3s ease 0s
+}
+
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+.product-card {
+}
+
+
+.product-card:hover .slide-actions .card-product-actions {
+    opacity: 1
+}
+
+.slide-actions .card-product-actions li {
+    display: inline-block
+}
+
+.slide-actions .card-product-actions li a {
+    color: #fff;
+    background-color: #333;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    margin: 0 2px;
+    display: block;
+    position: relative;
+    transition: all .3s ease-in-out
+}
+
+.slide-actions .card-product-actions li a:hover {
+    color: #fff;
+    background-color: #ef5777
+}
+
+.slide-actions .card-product-actions li a:after, .slide-actions .card-product-actions li a:before {
+    content: attr(data-tip);
+    color: #fff;
+    background-color: #000;
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 20px;
+    padding: 1px 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-50%);
+    position: absolute;
+    left: 50%;
+    top: -30px
+}
+
+.slide-actions .card-product-actions li a:after {
+    content: '';
+    height: 15px;
+    width: 15px;
+    border-radius: 0;
+    transform: translateX(-50%) rotate(45deg);
+    top: -20px;
+    z-index: -1
+}
+
+.slide-actions .card-product-actions li a:hover:after, .slide-actions .card-product-actions li a:hover:before {
+    opacity: 1
+}
+
+
+/* Responsive Queries at Bottom */ 
+
+@media (max-width: 768px) {
+    .carousel-item {
+        height: 300px;
+    }
+
+
+    .carousel-text {
+        position: absolute;
+        right: 0%;
+        left: 0%;
+        color: #fff;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .carousel-text h1 {
+        font-size: 2.3rem;
+    }
+}
+
+@media (min-width: 769px)  {
+
+    .carousel-text {
+        position: absolute;
+        right: 0%;
+        left: 0%;
+        color: #fff;
+        width: 100%;
+    }
+
+    .carousel-text h1 {
+        font-size: 3rem;
+    }
+}
+
+
+@media (min-width: 576px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 768px) {
+    .card-columns {
+        column-count: 3;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-columns {
+        column-count: 4;
+    }
+}
+
+@media (min-width: 1200px) {
+    .card-columns {
+        column-count: 4;
+    }
+}

@@ -1,0 +1,46 @@
+@using Microsoft.AspNetCore.Identity
+@using ECOMCupCake.Models
+@inject SignInManager<ApplicationUser> SignInManager
+    <header>
+        <div class="navbar-wrapper container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded">
+                @Html.ActionLink("Cupcake Store", "Index", new { controller = "Home" }, new { @class = "navbar-brand" })
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a asp-area="" asp-controller="Shop" asp-action="Index" class="nav-link">Shop</a></li>
+                    </ul>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <ul class="navbar-nav mr-auto">
+                            <a class="nav-link">Hello @User.Claims.First(name => name.Type == "Name").Value!</a>
+                        </ul>
+                        <form asp-action="Logout" asp-controller="Account" method="post" id="logoutForm" class="navbar-right">
+                            <ul class="navbar-nav navbar-right">
+                                <li class="nav-item">
+                                    <button type="submit" class="btn btn-link navbar-btn navbar-link nav-link">Logout</button>
+                                </li>
+                            </ul>
+                        </form>
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav navbar-right">
+
+                            <li class="nav-item">@Html.ActionLink("Sign up", "Register", "Account", new object { }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Sign in", "Login", "Account", new object { }, new { @class = "nav-link" })</li>
+                        </ul>
+
+                    }
+
+                    <form class="form-inline mt-2 mt-md-0 navbar-right">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        <button id="nav-search-btn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
