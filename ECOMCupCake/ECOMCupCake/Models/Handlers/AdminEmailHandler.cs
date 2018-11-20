@@ -6,6 +6,12 @@ namespace ECOMCupCake.Models.Handlers
 {
     public class AdminEmailHandler : AuthorizationHandler<RequireAdminRequirement>
     {
+        /// <summary>
+        /// Claims check for complying with admin access policy
+        /// </summary>
+        /// <param name="context">Context of the check</param>
+        /// <param name="requirement">Policy requirement</param>
+        /// <returns>Async void</returns>
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RequireAdminRequirement requirement)
         {
             if(!context.User.HasClaim(e => e.Type == ClaimTypes.Email))
