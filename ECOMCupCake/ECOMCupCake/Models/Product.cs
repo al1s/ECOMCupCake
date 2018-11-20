@@ -26,6 +26,6 @@ namespace ECOMCupCake.Models
         /// The slug.
         /// </value>
         [NotMapped]
-        private string Slug { get => Name.ToLower().Replace(" ", "-"); }
+        public string Slug { get => Name.ToLower().Replace(" ", "-"); }
     }
 }
