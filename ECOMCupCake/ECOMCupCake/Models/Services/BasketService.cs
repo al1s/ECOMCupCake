@@ -16,17 +16,20 @@ namespace ECOMCupCake.Models.Services
             _storeDbContext = context;
         }
 
-        public async Task AddProductAsync(string UserId, int ProductId, int quantity = 1)
+        public async Task<Basket> AddProductAsync(string UserId, int ProductId, int quantity = 1)
         {
-            _storeDbContext.Add(new Basket()
+            Basket nBasket = new Basket()
             {
                 ProductID = ProductId,
                 UserID = UserId,
                 Quantity = quantity
-            });
+            };
+
+            _storeDbContext.Add(nBasket);
             try
             {
                 await _storeDbContext.SaveChangesAsync();
+                return nBasket;
             }
             catch (DbUpdateConcurrencyException ex)
             {
