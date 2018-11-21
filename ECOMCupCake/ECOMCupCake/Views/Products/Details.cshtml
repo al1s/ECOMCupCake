@@ -1,1 +1,75 @@
-﻿
+﻿@model ECOMCupCake.Models.Product
+
+@{
+    ViewData["Title"] = "Cupcake Details";
+}
+<div class="row product-details">
+    <div class="col-12 col-md-7">
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col col-md-4">
+                        <img class="rounded-circle preview" style="background-image:url('@Model.Image')" />
+
+                    </div>
+                    <div class="col col-md-8">
+                        <h4 class="product-title">@Model.Name</h4>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-12 col-md-2">
+        @if (Model.Quantity > 0)
+        {
+            <span>In Stock</span><br />
+            <form>
+                <div class="form-group">
+                    <label class="control-label" for="quantity">@Html.DisplayNameFor(model => model.Quantity)</label>
+                    <input id="quantity" name="quantity" class="form-control" type="number" value="1" />
+                    <button type="submit" class="btn btn-success btn-product my-2 active"><i class="fa fa-cart-plus"></i> Add To Cart</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <div class="form-group">
+                <span>Out of Stock</span>
+                <label class="control-label" for="quantity">@Html.DisplayNameFor(model => model.Quantity)</label>
+                <input disabled id="quantity" name="quantity" class="form-control disabled" type="number" value="0" />
+                <a href="#" class="btn disabled btn-success btn-product my-2 active"><i class="fa fa-cart-plus"></i> Add To Cart</a>
+            </div>
+        }
+    </div>
+    <div class="col-12 col-md-3 order-md-first">
+        <h4>Related</h4>
+
+        @foreach (Product item in ViewBag.Related)
+        {
+            <div class="row py-2">
+                <div class="col col-md-4">
+                    <div class="rounded-circle related-preview" style="background-image:url('@item.Image')"></div>
+                </div>
+                <div class="col col-md-8">
+                    <span><a asp-area="" asp-route-slug="@item.Slug" asp-route-id="@item.ID" asp-controller="Products" asp-action="Details">@item.Name</a></span>
+                </div>
+            </div>
+        }
+    </div>
+</div>

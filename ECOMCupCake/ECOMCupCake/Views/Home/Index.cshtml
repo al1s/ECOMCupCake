@@ -32,7 +32,7 @@
             <div class="rounded-circle preview mx-auto" style="background-image:url('@item.Image')" alt="Cupcake image"></div>
             <h2>@item.Name</h2>
             <p>@item.Description</p>
-            <p><a class="" href="#" role="button">View details</a></p>
+            <p><a class="" asp-area="" asp-route-slug="@item.Slug" asp-route-id="@item.ID" asp-controller="Products" asp-action="Details"  role="button">View details</a></p>
         </div>
     }
 </div>

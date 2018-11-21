@@ -17,7 +17,7 @@
             <div class="card-image-wrap"><img class="card-img-top" src="@item.Image" alt="Cupcake Image"></div>
             <div class="slide-actions">
                 <ul class="card-product-actions">
-                    <li><a href="" data-tip="View"><i class="fa fa-search"></i></a></li>
+                    <li><a asp-route-slug="@item.Slug" asp-route-id="@item.ID" asp-controller="Products" asp-action="Details" data-tip="View"><i class="fa fa-search"></i></a></li>
                     <li><a href="" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
             </div>
@@ -26,7 +26,7 @@
                 <p class="card-text text-truncate">@item.Description</p>
                 <div class="row">
                     <div class="col-md-6">
-                        <a class="btn btn-primary btn-product active my-2"><i class="fa fa-info"></i> View</a>
+                        <a class="btn btn-primary btn-product active my-2" asp-route-slug="@item.Slug" asp-route-id="@item.ID" asp-controller="Products" asp-action="Details" ><i class="fa fa-info"></i> View</a>
                     </div>
                     <div class="col-md-6">
                         <a href="#" class="btn btn-success btn-product my-2 active"><i class="fa fa-cart-plus"></i> Buy</a>

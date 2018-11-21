@@ -19,5 +19,13 @@ namespace ECOMCupCake.Models
         public bool Published { get; set; }
         public int Quantity { get; set; }
 
+        /// <summary>
+        /// Gets the slug.
+        /// </summary>
+        /// <value>
+        /// The slug.
+        /// </value>
+        [NotMapped]
+        public string Slug { get => Name.ToLower().Replace(" ", "-"); }
     }
 }
