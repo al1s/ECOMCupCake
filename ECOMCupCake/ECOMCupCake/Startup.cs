@@ -1,4 +1,5 @@
 ﻿using ECOMCupCake.Data;
+using ECOMCupCake.Interfaces;
 using ECOMCupCake.Models;
 using ECOMCupCake.Models.Handlers;
 using ECOMCupCake.Models.Interfaces;
@@ -39,6 +40,7 @@ namespace ECOMCupCake
             services.AddDbContext<StoreDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ProdDB")));
             services.AddTransient<IInventory, InventoryService>();
+            services.AddTransient<IBasket, BasketService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityDB")));
