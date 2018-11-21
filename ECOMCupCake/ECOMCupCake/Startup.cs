@@ -4,6 +4,7 @@ using ECOMCupCake.Models;
 using ECOMCupCake.Models.Handlers;
 using ECOMCupCake.Models.Interfaces;
 using ECOMCupCake.Models.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ECOMCupCake
 {
@@ -51,6 +56,31 @@ namespace ECOMCupCake
             });
 
             services.AddScoped<IAuthorizationHandler, AdminEmailHandler>();
+
+            services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+            {
+                microsoftOptions.ClientId = Configuration["OAUTH:Microsoft:AppId"];
+                microsoftOptions.ClientSecret = Configuration["OAUTH:Microsoft:Password"];
+                microsoftOptions.CallbackPath = new Microsoft.AspNetCore.Http.PathString("/signin-microsoft");
+                microsoftOptions.SaveTokens = true;
+                microsoftOptions.Scope.Add("https://login.microsoftonline.com/common/oauth2/v2.0/authorize");
+                microsoftOptions.ClaimsIssuer = "Microsoft";
+                microsoftOptions.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
+                microsoftOptions.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+                microsoftOptions.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+                microsoftOptions.ClaimActions.MapJsonKey(ClaimTypes.StateOrProvince, "state");
+                microsoftOptions.Events.OnCreatingTicket = ctx =>
+                {
+                    List<AuthenticationToken> tokens = ctx.Properties.GetTokens() as List<AuthenticationToken>;
+                    tokens.Add(new AuthenticationToken()
+                    {
+                        Name = "TicketCreated",
+                        Value = DateTime.UtcNow.ToString()
+                    });
+                    ctx.Properties.StoreTokens(tokens);
+                    return Task.CompletedTask;
+                };
+            });
 
 
         }
