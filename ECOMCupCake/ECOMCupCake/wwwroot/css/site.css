@@ -168,19 +168,20 @@ html {
     display: inline-block
 }
 
-.slide-actions .card-product-actions li a {
-    color: #fff;
-    background-color: #333;
-    font-size: 16px;
-    line-height: 40px;
-    text-align: center;
-    height: 40px;
-    width: 40px;
-    margin: 0 2px;
-    display: block;
-    position: relative;
-    transition: all .3s ease-in-out
-}
+    .slide-actions .card-product-actions li a, .slide-actions .card-product-actions li button {
+        color: #fff;
+        background-color: #333;
+        font-size: 16px;
+        line-height: 40px;
+        text-align: center;
+        height: 40px;
+        width: 40px;
+        margin: 0 2px;
+        display: block;
+        position: relative;
+        transition: all .3s ease-in-out;
+        border: none;
+    }
 
 .slide-actions .card-product-actions li a:hover {
     color: #fff;
