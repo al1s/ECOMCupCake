@@ -6,11 +6,11 @@ namespace ECOMCupCake.Interfaces
 {
     public interface IBasket
     {
-        Task<Basket> AddProductAsync(string UserId, int ProductId, int quantity);
-        Task DeleteProduct(string UserId, Basket productInBasket);
-        Task<Basket> GetProductInBasket(string UserId, int ProductId);
-        Task<IEnumerable<Basket>> GetAllInBasket(string UserId);
-        Task Update(string UserId, Basket product);
-        bool ProductExistsInBasket(string UserId, int ProductId);
+        Task<Basket> AddProductAsync(string userId, int productId, int quantity);
+        Task DeleteProduct(string userId, int productId, int? orderId = null);
+        Task<Basket> GetProductInBasket(string userId, int productId, int? orderId = null);
+        Task<IEnumerable<Basket>> GetAllInBasket(string userId);
+        Task Update(Basket product);
+        bool ProductExistsInBasket(string userId, int productId, int? orderId = null);
     }
 }

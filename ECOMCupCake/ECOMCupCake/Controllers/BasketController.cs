@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ECOMCupCake.Interfaces;
 using ECOMCupCake.Models;
@@ -35,8 +36,10 @@ namespace ECOMCupCake.Controllers
         /// Indexes this instance.
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> Index()
         {
+            Console.WriteLine("USER IS: " + HttpContext.User.Identity.Name);
             var user = HttpContext.User;
             var userId = _userManager.GetUserId(user);
             IEnumerable<Basket> basket = await _basket.GetAllInBasket(userId);
@@ -55,7 +58,7 @@ namespace ECOMCupCake.Controllers
         public async Task<IActionResult> Add(int pid, int quantity, string returnUrl)
         {
             Product product = await _inventory.GetById(pid);
-            if(product != null && quantity > 0 && quantity <= product.Quantity)
+            if (product != null && quantity > 0 && quantity <= product.Quantity)
             {
                 var user = HttpContext.User;
                 var userId = _userManager.GetUserId(user);
@@ -65,12 +68,44 @@ namespace ECOMCupCake.Controllers
 
             }
 
-            if(returnUrl != null && returnUrl.Length > 0)
+            if (returnUrl != null && returnUrl.Length > 0)
             {
                 Redirect(returnUrl);
             }
 
             return View();
+        }
+
+        /// <summary>
+        /// Removes the specified pid.
+        /// </summary>
+        /// <param name="pid">The pid.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Remove(int pid)
+        {
+            await _basket.DeleteProduct(_userManager.GetUserId(HttpContext.User), pid);
+            return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// Updates the specified pid.
+        /// </summary>
+        /// <param name="pid">The pid.</param>
+        /// <param name="change">The change.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Update(int pid, int change)
+        {
+            Basket basket = await _basket.GetProductInBasket(_userManager.GetUserId(HttpContext.User), pid);
+            if (basket != null)
+            {
+                basket.Quantity = Math.Max(0, basket.Quantity + change);
+                await _basket.Update(basket);
+            }
+            return RedirectToAction("Index");
         }
     }
 }
