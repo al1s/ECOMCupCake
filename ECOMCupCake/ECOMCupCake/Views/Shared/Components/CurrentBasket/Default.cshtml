@@ -1,8 +1,9 @@
-﻿@model IEnumerable<ECOMCupCake.Models.Basket>
+﻿@using System.Linq
+@model IEnumerable<ECOMCupCake.Models.Basket>
 
-@Model.Count() items in your Basket
+@Model.Sum(item => item.Quantity) items in your Basket
 @*
-@foreach (var item in Model)
-{
-    <p>@item.Product.Name</p>
-}*@
+    @foreach (var item in Model)
+    {
+        <p>@item.Product.Name</p>
+    }*@
