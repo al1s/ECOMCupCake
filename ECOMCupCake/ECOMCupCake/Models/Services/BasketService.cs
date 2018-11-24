@@ -64,9 +64,10 @@ namespace ECOMCupCake.Models.Services
         /// <param name="UserId">The user identifier.</param>
         /// <param name="productInBasket">The product in basket.</param>
         /// <returns></returns>
-        public async Task DeleteProduct(string UserId, Basket productInBasket)
+        public async Task DeleteProduct(string userId, int productId, int? orderId = null)
         {
-            _storeDbContext.Baskets.Remove(productInBasket);
+            Basket basket = await GetProductInBasket(userId, productId, orderId);
+            _storeDbContext.Baskets.Remove(basket);
             try
             {
                 await _storeDbContext.SaveChangesAsync();
@@ -93,9 +94,9 @@ namespace ECOMCupCake.Models.Services
         /// <param name="UserId">The user identifier.</param>
         /// <param name="ProductId">The product identifier.</param>
         /// <returns></returns>
-        public async Task<Basket> GetProductInBasket(string UserId, int ProductId)
+        public async Task<Basket> GetProductInBasket(string userId, int productId, int? orderId = null)
         {
-            return await _storeDbContext.Baskets.FindAsync(UserId, ProductId);
+            return await _storeDbContext.Baskets.FirstOrDefaultAsync(b => b.UserID == userId && b.ProductID == productId && b.OrderID == orderId);
         }
 
         /// <summary>
@@ -104,7 +105,7 @@ namespace ECOMCupCake.Models.Services
         /// <param name="UserId">The user identifier.</param>
         /// <param name="ProductInBasket">The product in basket.</param>
         /// <returns></returns>
-        public async Task Update(string UserId, Basket ProductInBasket)
+        public async Task Update(Basket ProductInBasket)
         {
             _storeDbContext.Baskets.Update(ProductInBasket);
             try
@@ -123,9 +124,9 @@ namespace ECOMCupCake.Models.Services
         /// <param name="UserId">The user identifier.</param>
         /// <param name="ProductId">The product identifier.</param>
         /// <returns></returns>
-        public bool ProductExistsInBasket(string UserId, int ProductId)
+        public bool ProductExistsInBasket(string UserId, int ProductId, int ? orderId = null)
         {
-            return _storeDbContext.Baskets.Any(b => b.UserID == UserId && b.ProductID == ProductId);
+            return _storeDbContext.Baskets.Any(b => b.UserID == UserId && b.ProductID == ProductId && b.OrderID == orderId);
         }
     }
 }
