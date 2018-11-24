@@ -17,13 +17,24 @@ namespace ECOMCupCake.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IInventory _inventory;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasketController"/> class.
+        /// </summary>
+        /// <param name="basket">The basket.</param>
+        /// <param name="inventory">The inventory.</param>
+        /// <param name="userManager">The user manager.</param>
         public BasketController(IBasket basket, IInventory inventory, UserManager<ApplicationUser> userManager)
         {
             _basket = basket;
             _inventory = inventory;
             _userManager = userManager;
         }
-        // GET /Basket/Index
+
+        // GET /Basket/Index        
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             var user = HttpContext.User;
@@ -32,7 +43,13 @@ namespace ECOMCupCake.Controllers
             return View(basket);
         }
 
-
+        /// <summary>
+        /// Adds the specified pid.
+        /// </summary>
+        /// <param name="pid">The pid.</param>
+        /// <param name="quantity">The quantity.</param>
+        /// <param name="returnUrl">The return URL.</param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Add(int pid, int quantity, string returnUrl)
@@ -44,6 +61,13 @@ namespace ECOMCupCake.Controllers
                 var userId = _userManager.GetUserId(user);
 
                 Basket basket = await _basket.AddProductAsync(userId, pid, quantity);
+                return RedirectToAction("Details", "Products", new { id = pid, slug = product.Slug });
+
+            }
+
+            if(returnUrl != null && returnUrl.Length > 0)
+            {
+                Redirect(returnUrl);
             }
 
             return View();
