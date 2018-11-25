@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\images\NewFolder\" />
     <Folder Include="wwwroot\js\Home\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
