@@ -18,6 +18,11 @@ html {
 }
 
 /* Carousel */
+
+.carousel-item.active.short{
+    height: 110px;
+}
+
 .carousel-caption p {
     font-size: 20px;
     line-height: 1.4;
@@ -218,7 +223,15 @@ html {
     opacity: 1
 }
 
+.shopping-basket .product-image {
+    object-fit: cover;
+    object-position: center;
+}
 
+.shopping-basket .changed {
+    border-color: lightgreen;
+    border-style: solid;
+}
 /* Responsive Queries at Bottom */ 
 
 @media (max-width: 768px) {

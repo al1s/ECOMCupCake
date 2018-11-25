@@ -85,7 +85,17 @@ namespace ECOMCupCake.Models.Services
         /// <returns></returns>
         public async Task<IEnumerable<Basket>> GetAllInBasket(string UserId)
         {
-            return await _storeDbContext.Baskets.Where(b => b.UserID == UserId && b.OrderID == null).ToListAsync();
+            return await _storeDbContext.Baskets.Include(p => p.Product).Where(b => b.UserID == UserId && b.OrderID == null).ToListAsync();
+        }
+
+        /// <summary>
+        /// Baskets the count.
+        /// </summary>
+        /// <param name="UserId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<int> BasketCount(string UserId)
+        {
+            return await _storeDbContext.Baskets.Where(b => b.UserID == UserId && b.OrderID == null).SumAsync(x => x.Quantity);
         }
 
         /// <summary>

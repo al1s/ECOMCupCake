@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ECOMCupCake.Interfaces;
 using ECOMCupCake.Models;
 using ECOMCupCake.Models.Interfaces;
+using ECOMCupCake.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -97,14 +98,20 @@ namespace ECOMCupCake.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Update(int pid, int change)
+        public async Task<IActionResult> Update(ICollection<BaskeEditViewModel> baskets)
         {
-            Basket basket = await _basket.GetProductInBasket(_userManager.GetUserId(HttpContext.User), pid);
-            if (basket != null)
+            string userId = _userManager.GetUserId(HttpContext.User);
+            
+            foreach(var bUpdate in baskets)
             {
-                basket.Quantity = Math.Max(0, basket.Quantity + change);
-                await _basket.Update(basket);
+                Basket basket = await _basket.GetProductInBasket(userId, bUpdate.ProductID);
+                if (basket != null)
+                {
+                    basket.Quantity = Math.Max(0, bUpdate.Quantity);
+                    await _basket.Update(basket);
+                }
             }
+      
             return RedirectToAction("Index");
         }
     }

@@ -12,5 +12,6 @@ namespace ECOMCupCake.Interfaces
         Task<IEnumerable<Basket>> GetAllInBasket(string userId);
         Task Update(Basket product);
         bool ProductExistsInBasket(string userId, int productId, int? orderId = null);
+        Task<int> BasketCount(string UserId);
     }
 }
