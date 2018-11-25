@@ -6,8 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\images\NewFolder\**" />
+    <Content Remove="wwwroot\images\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\images\NewFolder\**" />
+    <None Remove="wwwroot\images\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\images\NewFolder\" />
     <Folder Include="wwwroot\js\Home\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
