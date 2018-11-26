@@ -8,24 +8,49 @@ namespace ECOMCupCake.Services
 {
     public class EmailSender : IEmailSender
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EmailSender"/> class.
+        /// </summary>
+        /// <param name="optionsAccessor">The options accessor.</param>
         public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor)
         {
             Options = optionsAccessor.Value;
         }
 
-        public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
+        /// <summary>
+        /// Gets the options.
+        /// </summary>
+        /// <value>
+        /// The options.
+        /// </value>
+        public AuthMessageSenderOptions Options { get; }
 
+        /// <summary>
+        /// Sends the email asynchronous.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="subject">The subject.</param>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
         public Task SendEmailAsync(string email, string subject, string message)
         {
             return Execute(Options.SendGridKey, subject, message, email);
         }
 
+        /// <summary>
+        /// Executes the specified API key.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
+        /// <param name="subject">The subject.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="email">The email.</param>
+        /// <returns></returns>
         public Task Execute(string apiKey, string subject, string message, string email)
         {
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("Joe@contoso.com", "Joe Smith"),
+                From = new EmailAddress("no-reply@ecomcupcake.azurewebsites.net", "ECOMCupcake"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
