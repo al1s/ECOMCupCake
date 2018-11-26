@@ -79,12 +79,9 @@ namespace ECOMCupCake
                 microsoftOptions.ClientSecret = Configuration["OAUTH:Microsoft:Password"];
                 microsoftOptions.CallbackPath = new Microsoft.AspNetCore.Http.PathString("/signin-microsoft");
                 microsoftOptions.SaveTokens = true;
-                microsoftOptions.Scope.Add("https://login.microsoftonline.com/common/oauth2/v2.0/authorize");
                 microsoftOptions.ClaimsIssuer = "Microsoft";
-                microsoftOptions.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
-                microsoftOptions.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+                microsoftOptions.ClaimActions.MapJsonKey("Name", "name");
                 microsoftOptions.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
-                microsoftOptions.ClaimActions.MapJsonKey(ClaimTypes.StateOrProvince, "state");
                 microsoftOptions.Events.OnCreatingTicket = ctx =>
                 {
                     List<AuthenticationToken> tokens = ctx.Properties.GetTokens() as List<AuthenticationToken>;
@@ -102,10 +99,8 @@ namespace ECOMCupCake
                 facebookOptions.AppSecret = Configuration["OAUTH:Facebook:AppSecret"];
                 facebookOptions.CallbackPath = new Microsoft.AspNetCore.Http.PathString("/signin-facebook");
                 facebookOptions.SaveTokens = true;
-                facebookOptions.Scope.Add("https://www.facebook.com/dialog/oauth");
                 facebookOptions.ClaimsIssuer = "Facebook";
-                facebookOptions.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
-                facebookOptions.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+                facebookOptions.ClaimActions.MapJsonKey("Name", "name");
                 facebookOptions.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
                 facebookOptions.Events.OnCreatingTicket = ctx =>
                 {
