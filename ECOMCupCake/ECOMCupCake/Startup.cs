@@ -4,6 +4,7 @@ using ECOMCupCake.Models;
 using ECOMCupCake.Models.Handlers;
 using ECOMCupCake.Models.Interfaces;
 using ECOMCupCake.Models.Services;
+using ECOMCupCake.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -121,6 +122,8 @@ namespace ECOMCupCake
                 };
             });
 
+            // Email
+            services.Configure<AuthMessageSenderOptions>(Configuration.GetSection("SendGrid"));
 
         }
 
