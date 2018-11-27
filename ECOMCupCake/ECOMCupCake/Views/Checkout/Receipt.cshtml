@@ -6,12 +6,10 @@
 
 <h2>Review items</h2>
 
-<div class="card shopping-basket">
-    @await Html.PartialAsync("_items", Model)
-    <div class="card-footer">
-        <div class="float-left" style="margin: 5px">
-            Total price: <b>$@Math.Round(Model.Sum(item => item.Product.Price * item.Quantity), 2)</b>
-        </div>
-        <button type="submit" class="btn btn-success float-right">Place your order</button>
+<div class="container">
+    <div class="row">
+        @await Html.PartialAsync("_items", Model)
+        @await Html.PartialAsync("_addressForm")
+        @await Html.PartialAsync("_payment")
     </div>
 </div>
