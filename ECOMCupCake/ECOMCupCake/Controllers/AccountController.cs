@@ -323,5 +323,28 @@ namespace ECOMCupCake.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Handle email confirmation by a user
+        /// </summary>
+        /// <param name="userId">User to confirm</param>
+        /// <param name="code">Token for the user</param>
+        /// <returns>View</returns>
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{userId}'.");
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+        }
+
     }
 }
