@@ -13,6 +13,9 @@ namespace ECOMCupCake.Models
         public int Quantity { get; set; }
         public int? OrderID { get; set; }
 
+        // Navigation Properties
         public Product Product { get; set; }
+        public Order Order { get; set; }
+
     }
 }

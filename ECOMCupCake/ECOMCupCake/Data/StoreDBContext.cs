@@ -12,10 +12,16 @@ namespace ECOMCupCake.Data
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Basket> Baskets { get; set; }
+        public DbSet<Order> Orders{ get; set; }
+
+ 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Basket>().HasKey(b => new { b.UserID, b.ProductID });
+            modelBuilder.Entity<Basket>().HasOne(e => e.Order)
+                .WithMany(c => c.Baskets);
+
             modelBuilder.Entity<Product>().HasData(
                 new Product() { ID = 1, Sku = "PP00001",Quantity = 1, Name = "Pumpkin Pie", Price = 5.87M, Description = "Delicious cake is made with fresh pumpkin from local farms and frosted with whipped cream frosting", Image = "/images/Products/pexels-photo-1055271.jpeg", Published = true },
                 new Product() { ID = 2, Sku = "RP00002", Quantity = 1, Name = "Rum Pie", Price = 8.87M, Description = "Delicious cake topped with chocolate, soaked in rum", Image = "/images/Products/pexels-photo-1026123.jpeg", Published = true },
