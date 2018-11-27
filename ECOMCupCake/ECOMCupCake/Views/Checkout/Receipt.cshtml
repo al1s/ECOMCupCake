@@ -1,0 +1,15 @@
+﻿@model IEnumerable<ECOMCupCake.Models.Basket>
+
+@{
+    ViewData["Title"] = "Order";
+}
+
+<h2>Review items</h2>
+
+<div class="container">
+    <div class="row">
+        @await Html.PartialAsync("_items", Model)
+        @await Html.PartialAsync("_addressForm")
+        @await Html.PartialAsync("_payment")
+    </div>
+</div>
