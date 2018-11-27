@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using ECOMCupCake.Models;
 using ECOMCupCake.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECOMCupCake.Controllers
@@ -23,6 +25,8 @@ namespace ECOMCupCake.Controllers
         /// </summary>
         private SignInManager<ApplicationUser> _signInManager;
 
+        private readonly IEmailSender _emailSender;
+
         /// <summary>
         /// Gets or sets the error message.
         /// </summary>
@@ -37,10 +41,11 @@ namespace ECOMCupCake.Controllers
         /// </summary>
         /// <param name="userManager">The user manager.</param>
         /// <param name="signInManager">The sign in manager.</param>
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         /// <summary>
@@ -105,6 +110,14 @@ namespace ECOMCupCake.Controllers
                     await _userManager.AddClaimsAsync(user, myclaims);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, protocol: HttpContext.Request.Scheme);
+
+                    string subject = "CupCakes store: email confirmation";
+                    await _emailSender.SendEmailAsync(user.Email, subject,
+    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
                     return RedirectToLocal(returnUrl);
                 }
 
