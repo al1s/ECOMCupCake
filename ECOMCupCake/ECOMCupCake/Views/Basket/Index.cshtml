@@ -76,15 +76,13 @@
         <div class="float-left" style="margin: 5px">
             Total price: <b>$@Math.Round(Model.Sum(item => item.Product.Price * item.Quantity), 2)</b>
         </div>
-        <button type="submit" class="btn btn-success float-right">Checkout</button>
+        <a asp-action="Receipt" asp-controller="Checkout" class="btn btn-success float-right">Checkout</a>
     </div>
 </div>
-<form id="UpdateForm" asp-controller="Basket" asp-action="Update">
-
-</form>
+<form id="UpdateForm" asp-controller="Basket" asp-action="Update"></form>
 @section Scripts {
     <script type="text/javascript">
-        $('#update-btn').click(function(){
+        $('#update-btn').click(function () {
             let uForm = $("#UpdateForm");
             uForm.not(':first').remove();
             let i = 0;
