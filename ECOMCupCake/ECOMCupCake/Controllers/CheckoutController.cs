@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using ECOMCupCake.Interfaces;
 using ECOMCupCake.Models;
 using ECOMCupCake.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECOMCupCake.Controllers
 {
+    [Authorize]
     public class CheckoutController : Controller
     {
         private readonly IBasket _basket;
