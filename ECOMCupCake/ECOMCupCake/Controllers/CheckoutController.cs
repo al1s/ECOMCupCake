@@ -36,6 +36,7 @@ namespace ECOMCupCake.Controllers
         /// Indexes this instance.
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> Receipt()
         {
             var user = HttpContext.User;
