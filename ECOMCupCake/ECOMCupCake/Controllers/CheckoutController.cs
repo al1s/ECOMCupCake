@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ECOMCupCake.Interfaces;
 using ECOMCupCake.Models;
@@ -39,7 +40,14 @@ namespace ECOMCupCake.Controllers
         {
             var user = HttpContext.User;
             var userId = _userManager.GetUserId(user);
-            IEnumerable<Basket> basket = await _basket.GetAllInBasket(userId);
+            var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
+
+            Order order = await _basket.CreateOrder(userId);
+            if (email != null && email.Value != null) { 
+                await _basket.SendReceipt(order, email.Value);
+            }
+
+            IEnumerable<Basket> basket = order.Baskets;
             return View(basket);
         }
     }
