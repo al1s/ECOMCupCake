@@ -21,17 +21,19 @@ namespace ECOMCupCake.Migrations
 
             modelBuilder.Entity("ECOMCupCake.Models.Basket", b =>
                 {
-                    b.Property<string>("UserID");
-
-                    b.Property<int>("ProductID");
-
-                    b.Property<int>("ID");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("OrderID");
 
+                    b.Property<int>("ProductID");
+
                     b.Property<int>("Quantity");
 
-                    b.HasKey("UserID", "ProductID");
+                    b.Property<string>("UserID");
+
+                    b.HasKey("ID");
 
                     b.HasIndex("OrderID");
 
@@ -45,6 +47,8 @@ namespace ECOMCupCake.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Total");
 
                     b.Property<string>("UserID");
 

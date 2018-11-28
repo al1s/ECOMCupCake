@@ -13,5 +13,8 @@ namespace ECOMCupCake.Interfaces
         Task Update(Basket product);
         bool ProductExistsInBasket(string userId, int productId, int? orderId = null);
         Task<int> BasketCount(string UserId);
+        Task SendReceipt(Order order, string email);
+        Task<Order> CreateOrder(string userId);
+
     }
 }

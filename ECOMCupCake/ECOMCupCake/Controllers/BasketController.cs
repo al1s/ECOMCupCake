@@ -74,7 +74,7 @@ namespace ECOMCupCake.Controllers
                 Redirect(returnUrl);
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
 
         /// <summary>
