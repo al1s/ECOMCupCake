@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using ECOMCupCake.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ECOMCupCake.Services
@@ -37,6 +39,7 @@ namespace ECOMCupCake.Services
             return Execute(Options.SendGridKey, subject, message, email);
         }
 
+       
         /// <summary>
         /// Executes the specified API key.
         /// </summary>
@@ -45,7 +48,7 @@ namespace ECOMCupCake.Services
         /// <param name="message">The message.</param>
         /// <param name="email">The email.</param>
         /// <returns></returns>
-        public Task Execute(string apiKey, string subject, string message, string email)
+        public Task Execute(string apiKey, string subject, string message, string email, string templateID = null)
         {
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
@@ -54,9 +57,14 @@ namespace ECOMCupCake.Services
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
+           
             };
             msg.AddTo(new EmailAddress(email));
 
+            if (templateID != null)
+            {
+                msg.SetTemplateId(templateID);
+            }
             // Disable click tracking.
             // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
             msg.SetClickTracking(false, false);

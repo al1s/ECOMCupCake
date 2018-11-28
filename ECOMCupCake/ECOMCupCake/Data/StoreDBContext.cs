@@ -18,7 +18,6 @@ namespace ECOMCupCake.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Basket>().HasKey(b => new { b.UserID, b.ProductID });
             modelBuilder.Entity<Basket>().HasOne(e => e.Order)
                 .WithMany(c => c.Baskets);
 

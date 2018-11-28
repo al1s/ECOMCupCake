@@ -1,8 +1,15 @@
 ﻿using ECOMCupCake.Data;
 using ECOMCupCake.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ECOMCupCake.Models.Services
@@ -10,14 +17,50 @@ namespace ECOMCupCake.Models.Services
     public class BasketService : IBasket
     {
         private StoreDbContext _storeDbContext;
+        private readonly IEmailSender _emailSender;
+        protected readonly IHostingEnvironment _hostingEnvironment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BasketService"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public BasketService(StoreDbContext context)
+        public BasketService(StoreDbContext context, IEmailSender emailSender, IHostingEnvironment hostingEnvironment)
         {
             _storeDbContext = context;
+            _emailSender = emailSender;
+            _hostingEnvironment = hostingEnvironment;
+        }
+
+        /// <summary>
+        /// Receipts the template.
+        /// </summary>
+        /// <param name="order">The order.</param>
+        /// <returns></returns>
+        private string ReceiptTemplate(Order order)
+        {
+            string fileContents =
+                System.IO.File.ReadAllText(_hostingEnvironment.ContentRootPath + "/EmailTemplates/Receipt.html");
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"<html><head><title>Cupcake Order</title></head><body><table><td>");
+            if(order.Baskets != null) { 
+                foreach (var item in order.Baskets)
+                {
+                    sb.Append($"<tr>{item.Product.Name} x {item.Quantity}     ${Math.Round(item.Quantity * item.Product.Price, 2)}</tr>");
+                }
+            }
+            sb.Append($"<tr></tr><tr><strong>Total: ${Math.Round(order.Total, 2)} </strong></td></table></body></html>");
+            return fileContents.Replace("{content}", sb.ToString());
+        }
+        /// <summary>
+        /// Sends the receipt.
+        /// </summary>
+        /// <param name="order">The order.</param>
+        /// <returns></returns>
+        public Task SendReceipt(Order order, string email)
+        {
+            if (order == null || email == null) { return null; }
+           
+            return _emailSender.SendEmailAsync(email, $"Your Cupcake Order: #{order.ID}", ReceiptTemplate(order));
         }
 
         /// <summary>
@@ -137,6 +180,30 @@ namespace ECOMCupCake.Models.Services
         public bool ProductExistsInBasket(string UserId, int ProductId, int ? orderId = null)
         {
             return _storeDbContext.Baskets.Any(b => b.UserID == UserId && b.ProductID == ProductId && b.OrderID == orderId);
+        }
+
+        /// <summary>
+        /// Creates the order.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<Order> CreateOrder(string userId)
+        {
+            Order order = new Order() { UserID = userId, Total = 0 };
+            _storeDbContext.Orders.Add(order);
+            await _storeDbContext.SaveChangesAsync();
+            decimal total = 0m;
+            IEnumerable<Basket> basketItems = await GetAllInBasket(userId);
+            foreach(Basket item in basketItems)
+            {
+                total += item.Product.Price * item.Quantity;
+                item.OrderID = order.ID;
+                _storeDbContext.Baskets.Update(item);
+            }
+            order.Total = total;
+            _storeDbContext.Orders.Update(order);
+            await _storeDbContext.SaveChangesAsync();
+            return order;
         }
     }
 }

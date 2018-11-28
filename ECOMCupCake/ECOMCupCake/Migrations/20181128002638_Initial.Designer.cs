@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECOMCupCake.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20181127075258_Add Order Model")]
-    partial class AddOrderModel
+    [Migration("20181128002638_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,17 +23,19 @@ namespace ECOMCupCake.Migrations
 
             modelBuilder.Entity("ECOMCupCake.Models.Basket", b =>
                 {
-                    b.Property<string>("UserID");
-
-                    b.Property<int>("ProductID");
-
-                    b.Property<int>("ID");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("OrderID");
 
+                    b.Property<int>("ProductID");
+
                     b.Property<int>("Quantity");
 
-                    b.HasKey("UserID", "ProductID");
+                    b.Property<string>("UserID");
+
+                    b.HasKey("ID");
 
                     b.HasIndex("OrderID");
 
@@ -47,6 +49,8 @@ namespace ECOMCupCake.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Total");
 
                     b.Property<string>("UserID");
 

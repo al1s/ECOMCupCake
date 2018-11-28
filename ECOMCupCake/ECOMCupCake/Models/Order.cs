@@ -21,6 +21,15 @@ namespace ECOMCupCake.Models
         /// The user identifier.
         /// </value>
         public string UserID { get; set; }
+
+        /// <summary>
+        /// Gets or sets the total.
+        /// </summary>
+        /// <value>
+        /// The total.
+        /// </value>
+        public decimal Total { get; set; }
+
         /// <summary>
         /// Gets or sets the baskets.
         /// </summary>
@@ -28,5 +37,6 @@ namespace ECOMCupCake.Models
         /// The baskets.
         /// </value>
         public List<Basket> Baskets { get; set; }
+
     }
 }
