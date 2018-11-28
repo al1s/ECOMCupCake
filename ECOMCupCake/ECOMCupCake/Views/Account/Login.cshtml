@@ -19,8 +19,6 @@
             <div class="card-body">
                 <section>
                     <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                        <h4>Login to your Account.</h4>
-                        <hr />
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="Email"></label>
@@ -32,28 +30,24 @@
                             <input asp-for="Password" class="form-control" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-default">Log in</button>
-                        </div>
+                            <button type="submit" class="btn btn-lg btn-secondary btn-block">Log in</button>
                     </form>
+                    @{
+                        var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                        <hr />
+                        <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal mx-auto text-center">
+                                    @foreach (var provider in loginProviders)
+                                    {
+                                        <button type="submit" class="btn btn-default btn-lg" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-@provider.Name.ToLower()"></i> @provider.Name</button>
+                                    }
+                        </form>
+                    }
                 </section>
             </div>
         </div>
     </div>
 </div>
-@{
-    var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-            <div class="col-12 col-md-8 col-sm-8 col-lg-4 mx-auto">
-                <p>
-                    @foreach (var provider in loginProviders)
-                    {
-                        <button type="submit" class="btn btn-default btn-lg" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-@provider.Name.ToLower()"></i> @provider.Name</button>
-                    }
-                </p>
-            </div>
-        </form>
-}
+
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
