@@ -39,7 +39,7 @@ namespace ECOMCupCake.Models.Services
         private string ReceiptTemplate(Order order)
         {
             string fileContents =
-                System.IO.File.ReadAllText(_hostingEnvironment.ContentRootPath + "/EmailTemplates/Receipt.html");
+                System.IO.File.ReadAllText(_hostingEnvironment.ContentRootPath + "/wwwroot/EmailTemplates/Receipt.html");
             StringBuilder sb = new StringBuilder();
             sb.Append($"<html><head><title>Cupcake Order</title></head><body><table><td>");
             if(order.Baskets != null) { 
