@@ -1,8 +1,11 @@
-﻿@model PaginatedList<ECOMCupCake.Models.Product>
+﻿@using ECOMCupCake.Components
+@model PaginatedList<ECOMCupCake.Models.Product>
 
 @{
     ViewData["Title"] = "Shop";
 }
+
+@await Component.InvokeAsync(nameof(CurrentBasket))
 
 
 <div class="shop-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -16,20 +19,29 @@
         <div class="card product-card">
             <div class="card-image-wrap"><img class="card-img-top" src="@item.Image" alt="Cupcake Image"></div>
             <div class="slide-actions">
-                <ul class="card-product-actions">
-                    <li><a href="" data-tip="View"><i class="fa fa-search"></i></a></li>
-                    <li><a href="" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
-                </ul>
+                <form asp-route-returnurl="@ViewData["ReturnUrl"]" asp-action="Add" asp-controller="Basket" method="post">
+                    <input type="hidden" name="pid" value="@item.ID" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <ul class="card-product-actions">
+                        <li><a asp-route-slug="@item.Slug" asp-route-id="@item.ID" asp-controller="Products" asp-action="Details" data-tip="View"><i class="fa fa-search"></i></a></li>
+                        <li><button type="submit" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></button></li>
+                    </ul>
+                </form>
+
             </div>
             <div class="card-body">
                 <h5 class="card-title text-nowrap">@item.Name</h5>
                 <p class="card-text text-truncate">@item.Description</p>
                 <div class="row">
                     <div class="col-md-6">
-                        <a class="btn btn-primary btn-product active my-2"><i class="fa fa-info"></i> View</a>
+                        <a class="btn btn-primary btn-product active my-2" asp-route-slug="@item.Slug" asp-route-id="@item.ID" asp-controller="Products" asp-action="Details"><i class="fa fa-info"></i> View</a>
                     </div>
                     <div class="col-md-6">
-                        <a href="#" class="btn btn-success btn-product my-2 active"><i class="fa fa-cart-plus"></i> Buy</a>
+                        <form asp-route-returnurl="@ViewData["ReturnUrl"]" asp-action="Add" asp-controller="Basket" method="post">
+                            <input type="hidden" name="pid" value="@item.ID" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button class="btn btn-success btn-product my-2 active" type="submit"><i class="fa fa-cart-plus"></i> Buy</button>
+                            </form>
                     </div>
                 </div>
             </div>

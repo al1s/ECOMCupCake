@@ -33,3 +33,17 @@ The following claims are needed to create policies for Administrators, as well a
   - https://ecomcupcake.azurewebsites.net/Inventory/create
   - https://ecomcupcake.azurewebsites.net/Inventory/edit
   - https://ecomcupcake.azurewebsites.net/Inventory/delete
+
+### OAUTH providers
+- Microsoft
+- Facebook
+
+#Database Schema
+
+![Schema](assets/schema.jpg)
+
+- Products: Contains products that we have for sale.
+- Orders: Completed order by customer.
+- Baskets: Items in basket and items that were part of a previous order.
+
+The Baskets contain a nullable OrderID field which indicates wheter a basket item is part of a completed order. Once a order is placed and the basket items have that order id, the users basket will be empty, but the items will still be in our table so that we have a record.

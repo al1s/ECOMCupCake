@@ -1,0 +1,123 @@
+﻿@using System.Linq
+@model IEnumerable<ECOMCupCake.Models.Basket>
+
+@{
+    ViewData["Title"] = "Basket";
+}
+
+<h1 class="display-4 text-center">Basket</h1>
+<div class="row pb-2">
+    <div class="col">
+        <a asp-area="" asp-controller="Shop" asp-action="Index" class="btn btn-outline-success btn-sm float-right">Back to Shopping</a>
+    </div>
+</div>
+<div class="card shopping-basket">
+
+    <div class="card-body">
+        <div class="basket-header d-none d-lg-block">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-2 text-center">
+                </div>
+                <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+                    <strong>Product</strong>
+                </div>
+                <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+                    <div class="col-3 col-sm-3 col-md-6 text-md-right">
+                        <strong>Price</strong>
+                    </div>
+                    <div class="col-4 col-sm-4 col-md-4">
+                        <strong>Quantity</strong>
+                    </div>
+                    <div class="col-2 col-sm-2 col-md-2 text-right">
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-2 text-center">
+                    <img class="product-image" style="" src="@item?.Product?.Image" alt="Product Image" width="120" height="80">
+                </div>
+                <div class="col-12 col-sm-12 text-md-left col-md-6 text-center text-md-center text-lg-left text-xl-left">
+                    <a asp-route-slug="@item.Product.Slug" asp-route-id="@item.ProductID" asp-controller="Products" asp-action="Details" data-tip="View" class=" text-dark ">@item.Product.Name</a>
+                </div>
+                <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+                    <div class="col-4 col-sm-3 col-md-6 text-md-right">
+                        <h6><span class="text-muted">$ </span><strong>@Math.Round(item.Product.Price, 2)</strong></h6>
+                    </div>
+                    <div class="col-4 col-sm-4 col-md-4">
+                        <input type="number" step="1" max="99" min="1" title="Qty" class="quantity"
+                               size="4" value="@item.Quantity" data-quantity="@item.Quantity" data-pid="@item.ProductID">
+                    </div>
+                    <div class="col-4 col-sm-2 col-md-2 text-right">
+                        <form asp-controller="Basket" asp-action="Remove">
+                            <input type="hidden" name="pid" value="@item.ProductID" />
+                            <button type="submit" class="btn btn-outline-danger btn-xs">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
+        <div class="">
+            <span id="updateMessage" class="float-left d-none">
+                Update to save changes to cart.
+            </span>
+            <a id="update-btn" class="btn btn-outline-secondary float-right disabled">
+                Update
+            </a>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="float-left" style="margin: 5px">
+            Total price: <b>$@Math.Round(Model.Sum(item => item.Product.Price * item.Quantity), 2)</b>
+        </div>
+        <a asp-action="Receipt" asp-controller="Checkout" class="btn btn-success float-right">Checkout</a>
+    </div>
+</div>
+<form id="UpdateForm" asp-controller="Basket" asp-action="Update"></form>
+@section Scripts {
+    <script type="text/javascript">
+        $('#update-btn').click(function () {
+            let uForm = $("#UpdateForm");
+            uForm.not(':first').remove();
+            let i = 0;
+            $('.quantity').each(function () {
+                let elem = $(this);
+                if (elem.val() != elem.data('quantity')) {
+                    $('<input>').attr({
+                        type: 'hidden',
+                        value: elem.data('pid'),
+                        name: '[' + i + '].ProductID'
+                    }).appendTo(uForm);
+                    $('<input>').attr({
+                        type: 'hidden',
+                        value: elem.val(),
+                        name: '[' + i + '].Quantity'
+                    }).appendTo(uForm);
+                    i++;
+                }
+            });
+            if (i > 0) {
+                uForm.submit();
+            }
+        });
+
+        $('.quantity').change(function () {
+            let elem = $(this);
+            if (elem.val() != elem.data('quantity')) {
+                elem.addClass("changed");
+                $('#update-btn').removeClass("disabled");
+                $('#updateMessage').removeClass("d-none");
+            } else {
+                elem.removeClass("changed");
+                $('#update-btn').addClass("disabled");
+                $('#updateMessage').addClass("d-none");
+            }
+        });
+    </script>
+}
