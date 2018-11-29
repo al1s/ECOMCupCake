@@ -75,7 +75,7 @@ namespace ECOMCupCake.Models.Services
             Basket basket = await GetProductInBasket(UserId, ProductId);
             if (basket != null)
             {
-                basket.Quantity += 1;
+                basket.Quantity += quantity;
             }
             else
             {
