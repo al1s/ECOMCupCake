@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECOMCupCake", "ECOMCupCake\ECOMCupCake.csproj", "{F9700B3B-D487-4B34-8F30-86EBE5C63318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECOMCupCakeTests", "ECOMCupCakeTests\ECOMCupCakeTests.csproj", "{365DDDEF-C736-420D-925D-61667F9BB039}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECOMCupCakeTests", "ECOMCupCakeTests\ECOMCupCakeTests.csproj", "{365DDDEF-C736-420D-925D-61667F9BB039}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

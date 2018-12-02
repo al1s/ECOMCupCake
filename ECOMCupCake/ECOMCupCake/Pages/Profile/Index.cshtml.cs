@@ -12,7 +12,8 @@ namespace ECOMCupCake.Pages.Profile
 {
     public class IndexModel : PageModel
     {
-        public ApplicationUser AppUser;
+        [BindProperty]
+        public ApplicationUser AppUser { get; set; }
         private UserManager<ApplicationUser> _userManager { get; set; }
 
 
@@ -22,7 +23,7 @@ namespace ECOMCupCake.Pages.Profile
         }
         public async Task OnGet()
         {
-            AppUser = await _userManager.GetUserAsync((ClaimsPrincipal)HttpContext.User);
+            AppUser = await _userManager.GetUserAsync(HttpContext.User);
         }
     }
 }
