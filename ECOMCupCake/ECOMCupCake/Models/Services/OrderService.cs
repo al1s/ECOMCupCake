@@ -1,8 +1,6 @@
 ﻿using ECOMCupCake.Data;
-using ECOMCupCake.Interfaces;
 using ECOMCupCake.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,17 +22,20 @@ namespace ECOMCupCake.Models.Services
         public async Task<List<Order>> GetOrders(string userId, int numberOfOrders = 5)
         {
             List<Order> orders;
-            if(userId == string.Empty)
+            if (userId == string.Empty)
             {
                 orders = await _context.Orders
                                 .OrderByDescending(o => o.ID)
                                 .Take(numberOfOrders).ToListAsync();
             }
-            orders = await _context.Orders
-                            .Where(o => o.UserID == userId)
-                            .OrderByDescending(o => o.ID)
-                            .Take(numberOfOrders)
-                            .ToListAsync();
+            else
+            {
+                orders = await _context.Orders
+                                .Where(o => o.UserID == userId)
+                                .OrderByDescending(o => o.ID)
+                                .Take(numberOfOrders)
+                                .ToListAsync();
+            }
             foreach (var order in orders)
             {
                 _context.Entry(order).Collection(o => o.Baskets).Load();
