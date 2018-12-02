@@ -48,7 +48,13 @@ namespace ECOMCupCake
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                 .AddRazorPagesOptions(options =>
+                 {
+                     options.Conventions.AuthorizeFolder("/Admin", "AdminOnly");
+                     options.Conventions.AuthorizeFolder("/Profile");
+                 })
+                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
