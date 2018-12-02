@@ -173,7 +173,7 @@ namespace ECOMCupCake.Controllers
 
                     if(role.Where(r => r.Value == "Admin").Count() > 0)
                     {
-                        return RedirectToAction("Index", "Inventory");
+                        return RedirectToAction("Index", "Admin");
                     }
                 }
 
