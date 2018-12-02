@@ -65,6 +65,7 @@ namespace ECOMCupCake
                 options.UseSqlServer(Configuration.GetConnectionString("ProdDB")));
             services.AddTransient<IInventory, InventoryService>();
             services.AddTransient<IBasket, BasketService>();
+            services.AddTransient<IOrder, OrderService>();
 
             // Identity DB Context
             services.AddDbContext<ApplicationDbContext>(options =>

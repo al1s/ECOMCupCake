@@ -18,10 +18,10 @@ namespace ECOMCupCake.Models.Services
         }
         public async Task<List<Order>> GetOrders(int numberOfOrders = 5)
         {
-            return await GetOrders(numberOfOrders, string.Empty);
+            return await GetOrders(string.Empty);
         }
 
-        public async Task<List<Order>> GetOrders(int numberOfOrders, string userId)
+        public async Task<List<Order>> GetOrders(string userId, int numberOfOrders = 5)
         {
             List<Order> orders;
             if(userId == string.Empty)
@@ -38,6 +38,10 @@ namespace ECOMCupCake.Models.Services
             foreach (var order in orders)
             {
                 _context.Entry(order).Collection(o => o.Baskets).Load();
+                foreach (var basketItem in order.Baskets)
+                {
+                    basketItem.Product = await _context.Products.FirstOrDefaultAsync(p => p.ID == basketItem.ProductID);
+                }
             }
             return orders;
         }

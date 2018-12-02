@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ECOMCupCake.Models.Interfaces
 {
-    interface IOrder
+    public interface IOrder
     {
         /// <summary>
         /// Get a given number of last orders 
@@ -20,6 +20,6 @@ namespace ECOMCupCake.Models.Interfaces
         /// <param name="numberOfOrders">Number of orders to return</param>
         /// <param name="userId">A user whom orders to return</param>
         /// <returns>List of orders</returns>
-        Task<List<Order>> GetOrders(int numberOfOrders, string userId);
+        Task<List<Order>> GetOrders(string userId, int numberOfOrders);
     }
 }
