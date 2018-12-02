@@ -196,6 +196,7 @@ namespace ECOMCupCake.Models.Services
             IEnumerable<Basket> basketItems = await GetAllInBasket(userId);
             foreach(Basket item in basketItems)
             {
+                item.Product.Quantity -= item.Quantity;
                 total += item.Product.Price * item.Quantity;
                 item.OrderID = order.ID;
                 _storeDbContext.Baskets.Update(item);
