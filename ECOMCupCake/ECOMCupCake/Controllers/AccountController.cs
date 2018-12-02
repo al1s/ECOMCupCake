@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using ECOMCupCake.Models;
+﻿using ECOMCupCake.Models;
 using ECOMCupCake.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace ECOMCupCake.Controllers
 {
@@ -93,16 +93,24 @@ namespace ECOMCupCake.Controllers
                     Claim fullNameClaim = new Claim("Name", $"{user.FirstName} {user.LastName}");
 
                     // claim type for State
-                    Claim stateClaim = new Claim(ClaimTypes.StateOrProvince,user.State, ClaimValueTypes.String);
+                    Claim stateClaim = new Claim(ClaimTypes.StateOrProvince, user.State, ClaimValueTypes.String);
 
                     // claim type for email
                     Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+
+                    if (user.Email.Contains("@codefellows.com") ||
+                        user.Email.Contains("alstof@gmail.com") ||
+                        user.Email.Contains("guicansado@gmail.com"))
+                    {
+                        Claim adminClaim = new Claim(ClaimTypes.Role, "Admin");
+                        await _userManager.AddClaimAsync(user, adminClaim);
+                    }
 
                     List<Claim> myclaims = new List<Claim>()
                     {
                         fullNameClaim,
                         stateClaim,
-                        emailClaim
+                        emailClaim,
                     }; ;
 
 
@@ -158,7 +166,15 @@ namespace ECOMCupCake.Controllers
                 var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, false, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToLocal(returnUrl);
+                    var um = _signInManager.UserManager;
+                    var user = await um.FindByEmailAsync(lvm.Email);
+                    var claims = await um.GetClaimsAsync(user);
+                    var role = claims.Where(c => c.Type == ClaimTypes.Role).ToList();
+
+                    if(role.Where(r => r.Value == "Admin").Count() > 0)
+                    {
+                        return RedirectToAction("Index", "Inventory");
+                    }
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -300,7 +316,7 @@ namespace ECOMCupCake.Controllers
                     if (result.Succeeded)
                     {
 
-                        await _userManager.AddClaimsAsync(user,info.Principal.Claims);
+                        await _userManager.AddClaimsAsync(user, info.Principal.Claims);
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }
