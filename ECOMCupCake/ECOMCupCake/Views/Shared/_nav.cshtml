@@ -21,7 +21,7 @@
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <ul class="navbar-nav mr-auto">
-                        <a class="nav-link">Hello @(uNameClaim != null ? uNameClaim.Value : "")!</a>
+                        <a href="/Profile" class="nav-link">Hello @(uNameClaim != null ? uNameClaim.Value : "")!</a>
                     </ul>
                     <form asp-action="Logout" asp-controller="Account" method="post" id="logoutForm" class="navbar-right">
                         <ul class="navbar-nav navbar-right">
