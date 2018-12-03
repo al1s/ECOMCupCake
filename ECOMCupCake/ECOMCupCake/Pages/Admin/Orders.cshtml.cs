@@ -7,9 +7,11 @@ using ECOMCupCake.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ECOMCupCake.Pages.Admin
 {
+    [Authorize(Policy = "AdminOnly")]
     public class OrdersModel : PageModel
     {
         [BindProperty]

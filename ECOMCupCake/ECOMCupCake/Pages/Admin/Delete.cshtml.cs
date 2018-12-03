@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ECOMCupCake.Data;
 using ECOMCupCake.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ECOMCupCake.Pages
 {
+    [Authorize(Policy = "AdminOnly")]
     public class DeleteModel : PageModel
     {
         private readonly ECOMCupCake.Data.StoreDbContext _context;
