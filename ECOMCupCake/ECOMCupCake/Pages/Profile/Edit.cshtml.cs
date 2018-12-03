@@ -20,13 +20,14 @@ namespace ECOMCupCake.Pages.Profile
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> OnGetAsync(string userId)
+        public async Task<IActionResult> OnGetAsync()
         {
-            AppUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            AppUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == AppUser.Id);
             if (AppUser == null)
                 return NotFound();
             return Page();
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
             var UpdatedUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == AppUser.Id);

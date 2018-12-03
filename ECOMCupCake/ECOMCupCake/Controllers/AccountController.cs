@@ -362,5 +362,9 @@ namespace ECOMCupCake.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
+
+
+
+
     }
 }
