@@ -1,4 +1,5 @@
 ﻿using ECOMCupCake.Models;
+using ECOMCupCake.Models.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace ECOMCupCake.Interfaces
         bool ProductExistsInBasket(string userId, int productId, int? orderId = null);
         Task<int> BasketCount(string UserId);
         Task SendReceipt(Order order, string email);
-        Task<Order> CreateOrder(string userId);
-
+        Task<Order> CreateOrder(string userId,CheckoutViewModel cvm);
+        Task<Order> GetOrder(int orderId);
     }
 }
