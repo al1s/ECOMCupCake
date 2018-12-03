@@ -1,11 +1,13 @@
 ﻿using ECOMCupCake.Models;
 using ECOMCupCake.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
 namespace ECOMCupCake.Pages
 {
+    [Authorize(Policy = "AdminOnly")]
     public class CreateModel : PageModel
     {
         private readonly IInventory _inventory;
