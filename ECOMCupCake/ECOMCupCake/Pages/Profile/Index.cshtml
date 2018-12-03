@@ -2,14 +2,10 @@
 @model ECOMCupCake.Pages.Profile.IndexModel
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "_Layout.cshtml";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Product</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.AppUser.FirstName)
@@ -49,7 +45,3 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-page="./Edit">Edit</a> |
-</div>
-

@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-2 btn-group-vertical" role="group" aria-label="Second group">
+        <a asp-page="./Edit" class="btn btn-light">
+            Edit Profile
+        </a>
+        <a asp-page="./Password" class="btn btn-light">
+            Change Password
+        </a>
+    </div>
+    <div class="col-md-10 ">
+        @RenderBody()
+    </div>
+</div>
+
+@if (IsSectionDefined("Scripts"))
+{
+        @RenderSection("Scripts")
+}

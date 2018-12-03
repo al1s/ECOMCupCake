@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ECOMCupCake.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ECOMCupCake.Pages.Profile
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         [BindProperty]
@@ -20,20 +22,27 @@ namespace ECOMCupCake.Pages.Profile
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// Called when [get asynchronous].
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnGetAsync()
         {
-            AppUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == AppUser.Id);
+            AppUser = await _userManager.GetUserAsync(HttpContext.User);
             if (AppUser == null)
                 return NotFound();
             return Page();
         }
 
+        /// <summary>
+        /// Called when [post asynchronous].
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync()
         {
-            var UpdatedUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == AppUser.Id);
             if (!ModelState.IsValid)
                 return Page();
-            UpdatedUser.SecurityStamp = Guid.NewGuid().ToString();
+            ApplicationUser UpdatedUser = await _userManager.GetUserAsync(HttpContext.User);
             UpdatedUser.FirstName = AppUser.FirstName;
             UpdatedUser.LastName = AppUser.LastName;
             UpdatedUser.State = AppUser.State;
