@@ -1,44 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ECOMCupCake.Models
+namespace ECOMCupCake.Models.ViewModels
 {
-    public class Order
+    public class CheckoutViewModel
     {
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public int ID { get; set; }
-        /// <summary>
-        /// Gets or sets the user identifier.
-        /// </summary>
-        /// <value>
-        /// The user identifier.
-        /// </value>
-        public string UserID { get; set; }
-
-        /// <summary>
-        /// Gets or sets the total.
-        /// </summary>
-        /// <value>
-        /// The total.
-        /// </value>
-        public decimal Total { get; set; }
-
-        /// <summary>
-        /// Gets or sets the baskets.
-        /// </summary>
-        /// <value>
-        /// The baskets.
-        /// </value>
-        public List<Basket> Baskets { get; set; }
-
         /// <summary>
         /// Gets or sets the address.
         /// </summary>
@@ -81,7 +49,6 @@ namespace ECOMCupCake.Models
         /// The state.
         /// </value>
         public string State { get; set; }
-
         /// <summary>
         /// Gets or sets the city.
         /// </summary>
@@ -89,7 +56,6 @@ namespace ECOMCupCake.Models
         /// The city.
         /// </value>
         public string City { get; set; }
-
         /// <summary>
         /// Gets or sets the zip code.
         /// </summary>
@@ -104,15 +70,5 @@ namespace ECOMCupCake.Models
         /// The credit card number.
         /// </value>
         public string CreditCardNumber { get; set; }
-
-        /// <summary>
-        /// Gets or sets the created.
-        /// </summary>
-        /// <value>
-        /// The created.
-        /// </value>
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime Created { get; set; }
-
     }
 }

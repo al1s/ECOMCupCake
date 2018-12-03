@@ -1,5 +1,6 @@
 ﻿using ECOMCupCake.Data;
 using ECOMCupCake.Interfaces;
+using ECOMCupCake.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -187,9 +188,23 @@ namespace ECOMCupCake.Models.Services
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<Order> CreateOrder(string userId)
+        public async Task<Order> CreateOrder(string userId,CheckoutViewModel cvm)
         {
             Order order = new Order() { UserID = userId, Total = 0 };
+            if (cvm != null)
+            {
+                order.Address = cvm.Address;
+                order.Address2 = cvm.Address2;
+                order.Country = cvm.Country;
+                order.State = cvm.State;
+                order.City = cvm.City;
+                order.ZipCode = cvm.ZipCode;
+                order.FirstName = cvm.FirstName;
+                order.LastName = cvm.LastName;
+                order.CreditCardNumber = cvm.CreditCardNumber;
+
+
+            }
             _storeDbContext.Orders.Add(order);
             await _storeDbContext.SaveChangesAsync();
             decimal total = 0m;
@@ -205,6 +220,19 @@ namespace ECOMCupCake.Models.Services
             _storeDbContext.Orders.Update(order);
             await _storeDbContext.SaveChangesAsync();
             return order;
+        }
+
+        /// <summary>
+        /// Gets the order.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <returns></returns>
+        public async Task<Order> GetOrder(int orderId)
+        {
+            return await _storeDbContext
+                .Orders
+                .Include(baskets => baskets.Baskets).ThenInclude(product => product.Product)
+                .FirstOrDefaultAsync(x => x.ID == orderId);
         }
     }
 }
