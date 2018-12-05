@@ -26,6 +26,11 @@ namespace ECOMCupCake.Pages
         [BindProperty]
         public Product Product { get; set; }
 
+        /// <summary>
+        /// GET endpoint for editing product
+        /// </summary>
+        /// <param name="id">Product ID</param>
+        /// <returns>An editable page with product details</returns>
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -42,6 +47,10 @@ namespace ECOMCupCake.Pages
             return Page();
         }
 
+        /// <summary>
+        /// POST endpoint to submit product edition results
+        /// </summary>
+        /// <returns>A redirect to the main page of the admin panel</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -70,6 +79,11 @@ namespace ECOMCupCake.Pages
             return RedirectToPage("./Index");
         }
 
+        /// <summary>
+        /// Check whether product exists in a storage
+        /// </summary>
+        /// <param name="id">Product id to look for</param>
+        /// <returns>Boolean</returns>
         private bool ProductExists(int id)
         {
             return _context.Products.Any(e => e.ID == id);
