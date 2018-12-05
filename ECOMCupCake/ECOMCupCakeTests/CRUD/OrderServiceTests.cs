@@ -7,16 +7,16 @@ using Xunit;
 
 namespace ECOMCupCakeTests.CRUD
 {
-    public class OrderServiceTests : IDisposable
+    public class InventoryServiceTests : IDisposable
     {
         // shareable vars  
-        private Order order;
+        private Product product;
         private DbContextOptions<StoreDbContext> options;
 
         /// <summary>
         /// Constructor to setup testing environment
         /// </summary>
-        public OrderServiceTests()
+        public InventoryServiceTests()
         {
             // setup our db context
             options =
@@ -24,14 +24,15 @@ namespace ECOMCupCakeTests.CRUD
                 .UseInMemoryDatabase("productDb")
                 .Options;
 
-            order = new Order();
+            product = new Product();
             using (StoreDbContext context = new StoreDbContext(options))
             {
-                order.ID = 1;
-                order.UserID = "MyUserId";
-                order.Address = "MyAddress";
-                order.ZipCode = "00001";
-                context.Orders.Add(order);
+                product.ID = 1;
+                product.Name = "MyName";
+                product.Description = "MyDescription";
+                product.Price = 1M;
+                product.Published = true;
+                context.Products.Add(product);
                 context.SaveChanges();
             }
         }
@@ -41,12 +42,12 @@ namespace ECOMCupCakeTests.CRUD
         /// </summary>
         public void Dispose()
         {
-            order = null;
+            product = null;
             using (StoreDbContext context = new StoreDbContext(options))
             {
 
-                var entities = context.Orders.ToArray<Order>();
-                context.Orders.RemoveRange(entities);
+                var entities = context.Products.ToArray<Product>();
+                context.Products.RemoveRange(entities);
                 context.SaveChanges();
             }
         }
@@ -59,11 +60,12 @@ namespace ECOMCupCakeTests.CRUD
         {
             using (StoreDbContext context = new StoreDbContext(options))
             {
-                order.ID = 2;
-                order.UserID = "MyNextUserId";
-                order.Address = "MyNextAddress";
-                order.ZipCode = "00002";
-                context.Orders.Add(order);
+                product.ID = 2;
+                product.Name = "MyAnotherName";
+                product.Description = "MyAnotherDescription";
+                product.Price = 2M;
+                product.Published = false;
+                context.Products.Add(product);
                 context.SaveChanges();
             }
         }
@@ -78,9 +80,9 @@ namespace ECOMCupCakeTests.CRUD
             using (StoreDbContext context = new StoreDbContext(options))
             {
                 int expectedEntityId = 1;
-                string expectedAddress = "MyAddress";
-                var entity = context.Orders.FirstOrDefault(x => x.ID == expectedEntityId);
-                Assert.Equal(expectedAddress, entity.Address);
+                string expectedName = "MyName";
+                var entity = context.Products.FirstOrDefault(x => x.ID == expectedEntityId);
+                Assert.Equal(expectedName, entity.Name);
             }
         }
 
@@ -91,19 +93,19 @@ namespace ECOMCupCakeTests.CRUD
         public void CanUpdateEntityInDb()
         {
             int existingId = 1;
-            string expectedAddress = "MyAddress";
+            string expectedName = "MyNewName";
             using (StoreDbContext context = new StoreDbContext(options))
             {
-                var entity = context.Orders.FirstOrDefault(x => x.ID == existingId);
-                entity.Address = expectedAddress;
+                var entity = context.Products.FirstOrDefault(x => x.ID == existingId);
+                entity.Name = expectedName;
                 context.Update(entity);
                 context.SaveChanges();
             }
 
             using (StoreDbContext context = new StoreDbContext(options))
             {
-                var entity = context.Orders.FirstOrDefault(x => x.ID == existingId);
-                Assert.Equal(expectedAddress, entity.Address);
+                var entity = context.Products.FirstOrDefault(x => x.ID == existingId );
+                Assert.Equal(expectedName, entity.Name);
             }
         }
 
@@ -116,14 +118,14 @@ namespace ECOMCupCakeTests.CRUD
             int existingId = 1;
             using (StoreDbContext context = new StoreDbContext(options))
             {
-                var entity = context.Orders.FirstOrDefault(x => x.ID == existingId);
+                var entity = context.Products.FirstOrDefault(x => x.ID == existingId);
                 context.Remove(entity);
                 context.SaveChanges();
             }
 
             using (StoreDbContext context = new StoreDbContext(options))
             {
-                var entityCount = context.Orders.Count();
+                var entityCount = context.Products.Count();
                 Assert.Equal(0, entityCount);
             }
         }
