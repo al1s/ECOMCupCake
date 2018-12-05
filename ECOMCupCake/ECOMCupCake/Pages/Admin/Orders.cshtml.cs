@@ -23,6 +23,10 @@ namespace ECOMCupCake.Pages.Admin
             _order = order;
         }
 
+        /// <summary>
+        /// GET endpoint with a last 10 orders on the site for admin panel
+        /// </summary>
+        /// <returns>A page with last 10 orders</returns>
         public async Task OnGetAsync()
         {
             Orders = await _order.GetOrders(10);

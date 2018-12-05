@@ -22,6 +22,10 @@ namespace ECOMCupCake.Pages
 
         public IList<Product> Product { get; set; }
 
+        /// <summary>
+        /// GET endpoint for the main page with all products for admin panel
+        /// </summary>
+        /// <returns>A page with all products</returns>
         public async Task OnGetAsync()
         {
             var inventory = await _inventory.GetAll(onlyPublished: false);
