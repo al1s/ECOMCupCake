@@ -12,30 +12,31 @@ namespace ECOMCupCake.Pages
     {
         private readonly IInventory _inventory;
 
-        public CreateModel(IInventory inventory)
-        {
-            _inventory = inventory;
-        }
-
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-
+        /// <summary>
+        /// Page model
+        /// </summary>
         [BindProperty]
         public Product Product { get; set; }
 
+        public CreateModel(IInventory inventory) => _inventory = inventory;
+
+        /// <summary>
+        /// GET endpoint for creating product
+        /// </summary>
+        /// <returns>A blank product page</returns>
+        public IActionResult OnGet() => Page();
+
+        /// <summary>
+        /// POST endpoint for creating/storing product
+        /// </summary>
+        /// <returns>Redirect to admin panel</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
             await _inventory.Create(Product);
-            //_context.Products.Add(Product);
-            // await _context.SaveChangesAsync();
-
             return RedirectToPage("./Index");
         }
     }
