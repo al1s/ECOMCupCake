@@ -21,6 +21,11 @@ namespace ECOMCupCake.Pages.Profile
         {
             _userManager = userManager; 
         }
+
+        /// <summary>
+        /// GET endpoint for the main page of user profile 
+        /// </summary>
+        /// <returns>A page with all user info</returns>
         public async Task OnGet()
         {
             AppUser = await _userManager.GetUserAsync(HttpContext.User);

@@ -64,6 +64,11 @@ namespace ECOMCupCake.Controllers
             return View(basket);
         }
 
+        /// <summary>
+        /// Handle the checkout form submission
+        /// </summary>
+        /// <param name="cvm">Checkout model passed by checkout page</param>
+        /// <returns>Redirect to Receipt page</returns>
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Checkout(CheckoutViewModel cvm)

@@ -25,6 +25,9 @@ namespace ECOMCupCake.Controllers
         /// </summary>
         private SignInManager<ApplicationUser> _signInManager;
 
+        /// <summary>
+        /// The email handler interface for DI
+        /// </summary>
         private readonly IEmailSender _emailSender;
 
         /// <summary>

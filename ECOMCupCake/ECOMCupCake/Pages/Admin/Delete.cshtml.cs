@@ -16,14 +16,19 @@ namespace ECOMCupCake.Pages
     {
         private readonly ECOMCupCake.Data.StoreDbContext _context;
 
-        public DeleteModel(ECOMCupCake.Data.StoreDbContext context)
-        {
-            _context = context;
-        }
-
+        /// <summary>
+        /// Page product model
+        /// </summary>
         [BindProperty]
         public Product Product { get; set; }
 
+        public DeleteModel(ECOMCupCake.Data.StoreDbContext context) => _context = context;
+
+        /// <summary>
+        /// GET endpoint for deleting product
+        /// </summary>
+        /// <param name="id">Product ID to delete</param>
+        /// <returns>A confirmation page</returns>
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -40,6 +45,11 @@ namespace ECOMCupCake.Pages
             return Page();
         }
 
+        /// <summary>
+        /// POST endpoint for deletion product
+        /// </summary>
+        /// <param name="id">Product id to delete</param>
+        /// <returns>Redirect to admin panel</returns>
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)

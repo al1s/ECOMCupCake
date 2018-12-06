@@ -23,6 +23,10 @@ namespace ECOMCupCake.Pages.Profile
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// GET endpoint with a last 5 orders for the current user
+        /// </summary>
+        /// <returns>A page with last 5 orders</returns>
         public async Task OnGetAsync()
         {
             _user = await _userManager.GetUserAsync(HttpContext.User);

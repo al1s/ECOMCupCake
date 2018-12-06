@@ -17,13 +17,15 @@ namespace ECOMCupCake.Pages
     {
         private readonly ECOMCupCake.Data.StoreDbContext _context;
 
-        public DetailsModel(ECOMCupCake.Data.StoreDbContext context)
-        {
-            _context = context;
-        }
-
         public Product Product { get; set; }
 
+        public DetailsModel(ECOMCupCake.Data.StoreDbContext context) => _context = context;
+
+        /// <summary>
+        /// GET endpoint for product details
+        /// </summary>
+        /// <param name="id">Product id</param>
+        /// <returns>Page with product details</returns>
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
