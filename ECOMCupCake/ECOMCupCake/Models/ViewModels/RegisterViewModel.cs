@@ -9,23 +9,53 @@ namespace ECOMCupCake.Models.ViewModels
 {
     public class RegisterViewModel
     {
+        /// <summary>
+        /// Gets or sets the first name.
+        /// </summary>
+        /// <value>
+        /// The first name.
+        /// </value>
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+        /// <summary>
+        /// Gets or sets the last name.
+        /// </summary>
+        /// <value>
+        /// The last name.
+        /// </value>
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
+        /// <value>
+        /// The email.
+        /// </value>
         [Required]
         public string Email { get; set; }
 
  
+        /// <summary>
+        /// Gets or sets the first password.
+        /// </summary>
+        /// <value>
+        /// The password.
+        /// </value>
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        /// <summary>
+        /// Gets or sets the password confirmation.
+        /// </summary>
+        /// <value>
+        /// The password confirmation.
+        /// </value>
         [Required]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "The passwords do not match")]
@@ -33,6 +63,12 @@ namespace ECOMCupCake.Models.ViewModels
         public string ConfirmPassword { get; set; }
 
 
+        /// <summary>
+        /// Gets or sets the state.
+        /// </summary>
+        /// <value>
+        /// The state.
+        /// </value>
         [Required(ErrorMessage = "State is Required")]
         [Display(Name = "State")]
         public string State { get; set; }
@@ -467,6 +503,12 @@ namespace ECOMCupCake.Models.ViewModels
             };
         }
 
+        /// <summary>
+        /// Gets or sets the zip code.
+        /// </summary>
+        /// <value>
+        /// The zip code.
+        /// </value>
         [Required(ErrorMessage = "Zip Code is Required")]
         [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid Zip Code")]
         public string ZipCode { get; set; }

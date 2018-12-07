@@ -1,0 +1,38 @@
+﻿@page
+@model ECOMCupCake.Pages.Profile.OrdersModel
+
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Your last 5 Orders</h2>
+
+<table class="table">
+    <tbody>
+        @foreach (var item in Model.Orders)
+        {
+            <tr>
+                <td>
+                    Order #: @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td></td>
+                <td>
+                    Total: @Html.DisplayFor(modelItem => item.Total)
+                </td>
+            </tr>
+            @foreach (var product in item.Baskets)
+            {
+                <tr>
+                    <td></td>
+                    <td>
+                        @Html.DisplayFor(modelItem => product.Product.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => product.Quantity)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

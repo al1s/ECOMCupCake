@@ -17,11 +17,21 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Home</a></li>
                     <li class="nav-item"><a asp-area="" asp-controller="Shop" asp-action="Index" class="nav-link">Shop</a></li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item"><a asp-area="" asp-controller="Profile" asp-action="Index" class="nav-link">Profile</a></li>
+                        <li class="nav-item"><a asp-area="" asp-controller="Profile" asp-action="Orders" class="nav-link">Your orders</a></li>
+                        @if (User.HasClaim(ClaimTypes.Role, "Admin"))
+                        {
+                            <li class="nav-item"><a asp-area="" asp-controller="Admin" asp-action="Index" class="nav-link">Admin</a></li>
+                            <li class="nav-item"><a asp-area="" asp-controller="Admin" asp-action="Orders" class="nav-link">Last Orders</a></li>
+                        }
+                    }
                 </ul>
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <ul class="navbar-nav mr-auto">
-                        <a class="nav-link">Hello @(uNameClaim != null ? uNameClaim.Value : "")!</a>
+                        <a href="/Profile" class="nav-link">Hello @(uNameClaim != null ? uNameClaim.Value : "")!</a>
                     </ul>
                     <form asp-action="Logout" asp-controller="Account" method="post" id="logoutForm" class="navbar-right">
                         <ul class="navbar-nav navbar-right">
@@ -41,10 +51,7 @@
 
                 }
 
-                <form class="form-inline mt-2 mt-md-0 navbar-right">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                    <button id="nav-search-btn" class="btn btn-outline-success my-2" type="submit">Search</button>
-                </form>
+      
 
                 @await Component.InvokeAsync(nameof(BasketNav))
 

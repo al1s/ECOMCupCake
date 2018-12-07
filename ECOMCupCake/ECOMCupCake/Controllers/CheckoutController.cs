@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ECOMCupCake.Interfaces;
 using ECOMCupCake.Models;
 using ECOMCupCake.Models.Interfaces;
+using ECOMCupCake.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -37,19 +38,52 @@ namespace ECOMCupCake.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        public async Task<IActionResult> Receipt()
+        public async Task<IActionResult> Receipt(int id)
+        {
+            var user = HttpContext.User;
+            var userId = _userManager.GetUserId(user);
+   
+            Order order = await _basket.GetOrder(id);
+          
+            IEnumerable<Basket> basket = order.Baskets;
+            return View(order);
+        }
+
+        /// <summary>
+        /// Checkouts this instance.
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        public async Task<IActionResult> Checkout()
         {
             var user = HttpContext.User;
             var userId = _userManager.GetUserId(user);
             var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
 
-            Order order = await _basket.CreateOrder(userId);
-            if (email != null && email.Value != null) { 
+            IEnumerable<Basket> basket = await _basket.GetAllInBasket(userId);
+            return View(basket);
+        }
+
+        /// <summary>
+        /// Handle the checkout form submission
+        /// </summary>
+        /// <param name="cvm">Checkout model passed by checkout page</param>
+        /// <returns>Redirect to Receipt page</returns>
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Checkout(CheckoutViewModel cvm)
+        {
+            var user = HttpContext.User;
+            var userId = _userManager.GetUserId(user);
+            var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
+
+            Order order = await _basket.CreateOrder(userId, cvm);
+            if (email != null && email.Value != null)
+            {
                 await _basket.SendReceipt(order, email.Value);
             }
 
-            IEnumerable<Basket> basket = order.Baskets;
-            return View(basket);
+            return RedirectToAction("Receipt", new { id = order.ID });
         }
     }
 }

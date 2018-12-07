@@ -47,18 +47,28 @@ namespace ECOMCupCake
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add MVC framework with options to require authorize access to admin and user profile Razor pages
+            services.AddMvc()
+                 .AddRazorPagesOptions(options =>
+                 {
+                     options.Conventions.AuthorizeFolder("/Admin", "AdminOnly");
+                     options.Conventions.AuthorizeFolder("/Profile");
+                 })
+                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            // Setup User Identity to be managed by MVC
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            // DB Context
+            // App DB Context
             services.AddDbContext<StoreDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ProdDB")));
+
+            // Assign interface handlers
             services.AddTransient<IInventory, InventoryService>();
             services.AddTransient<IBasket, BasketService>();
+            services.AddTransient<IOrder, OrderService>();
 
             // Identity DB Context
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -71,6 +81,7 @@ namespace ECOMCupCake
                     policy.Requirements.Add(new RequireAdminRequirement()));
             });
 
+            // Policies handlers
             services.AddScoped<IAuthorizationHandler, AdminEmailHandler>();
 
 
@@ -118,7 +129,7 @@ namespace ECOMCupCake
                 };
             });
 
-            // Email
+            // Email handler
             services.AddSingleton<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration.GetSection("SendGrid"));
 

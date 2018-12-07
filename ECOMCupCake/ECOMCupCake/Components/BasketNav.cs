@@ -14,12 +14,21 @@ namespace ECOMCupCake.Components
         private readonly IBasket _basket;
         private readonly UserManager<ApplicationUser> _userManager;
 
+        /// <summary>
+        /// Basket navigation constructor
+        /// </summary>
+        /// <param name="basket">Basket interface injection</param>
+        /// <param name="userManager">UserManager injection</param>
         public BasketNav(IBasket basket, UserManager<ApplicationUser> userManager)
         {
             _basket = basket;
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// Build a basket component on page rendering 
+        /// </summary>
+        /// <returns>View with a data if user is authenticated</returns>
         public async Task<IViewComponentResult> InvokeAsync()
         {
             if (!User.Identity.IsAuthenticated)

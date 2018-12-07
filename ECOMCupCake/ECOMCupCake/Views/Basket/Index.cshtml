@@ -76,7 +76,7 @@
         <div class="float-left" style="margin: 5px">
             Total price: <b>$@Math.Round(Model.Sum(item => item.Product.Price * item.Quantity), 2)</b>
         </div>
-        <a asp-action="Receipt" asp-controller="Checkout" class="btn btn-success float-right">Checkout</a>
+        <a asp-action="Checkout" asp-controller="Checkout" class="btn btn-success float-right">Checkout</a>
     </div>
 </div>
 <form id="UpdateForm" asp-controller="Basket" asp-action="Update"></form>

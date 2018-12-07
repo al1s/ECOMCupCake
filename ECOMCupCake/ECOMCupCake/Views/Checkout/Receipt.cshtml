@@ -1,15 +1,63 @@
-﻿@model IEnumerable<ECOMCupCake.Models.Basket>
+﻿@model ECOMCupCake.Models.Order
 
 @{
-    ViewData["Title"] = "Order";
+    ViewData["Title"] = "Receipt";
 }
-
 <h2>Receipt</h2>
-
 <div class="container">
     <div class="row">
-        @await Html.PartialAsync("_items", Model)
-        @*@await Html.PartialAsync("_addressForm")*@
-        @*@await Html.PartialAsync("_payment")*@
+        <div class="card col-xs-10 col-sm-12 col-md-6 mx-auto">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <address>
+                        <strong>@Model.FirstName @Model.LastName</strong>
+                        <br>
+                        @Model.Address @Model.Address2
+                        <br>
+                        @Model.City, @Model.State @Model.ZipCode
+                        <br>
+                    </address>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                    <p>
+                        <em>Date: @Model.Created</em>
+                    </p>
+                    <p>
+                        <em>Receipt #: @Model.ID</em>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>#</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Baskets ?? Enumerable.Empty<ECOMCupCake.Models.Basket>())
+                        {
+                            <tr>
+                                <td class="col-md-9"><em>@item.Product.Name</em></td>
+                                <td class="col-md-1" style="text-align: center"> @item.Quantity</td>
+                                <td class="col-md-1 text-center">$@Math.Round(item.Product.Price, 2)</td>
+                                <td class="col-md-1 text-center">$@Math.Round(item.Product.Price * item.Quantity, 2)</td>
+                            </tr>
+                        }
+
+              
+                        <tr>
+                            <td>   </td>
+                            <td>   </td>
+                            <td class="text-right"><h4><strong>Total: </strong></h4></td>
+                            <td class="text-center text-danger"><h4><strong>$@Model.Total</strong></h4></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
+    </div>

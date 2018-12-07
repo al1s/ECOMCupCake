@@ -19,6 +19,9 @@ namespace ECOMCupCake.Models.ViewModels
             Items = items;
         }
 
+        /// <summary>
+        /// Returns whether the current page in products DTO has previous page 
+        /// </summary>
         public bool HasPreviousPage
         {
             get
@@ -27,6 +30,9 @@ namespace ECOMCupCake.Models.ViewModels
             }
         }
 
+        /// <summary>
+        /// Returns whether the current page in products DTO has next page 
+        /// </summary>
         public bool HasNextPage
         {
             get
